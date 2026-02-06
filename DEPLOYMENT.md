@@ -2,78 +2,65 @@
 
 ## ✅ Updated for Production
 
-Your app is ready to deploy! I've updated the build script to work with Vercel.
+Your app is ready to deploy! Build passes locally.
 
-## 🚀 Deploy to Vercel (Free, ~5 minutes)
+## � Deploy to Render (Free Forever, ~5 minutes)
 
-### Step 1: Create GitHub Repository
+Render offers permanent free hosting with PostgreSQL included.
+
+### Step 1: Push to GitHub
 ```bash
-git init
 git add .
 git commit -m "Ready for deployment"
-# Create a new repo on github.com, then:
-git remote add origin YOUR_GITHUB_REPO_URL
-git push -u origin main
+git push
 ```
 
-### Step 2: Deploy to Vercel
-1. Go to https://vercel.com/signup (sign up with GitHub)
-2. Click **"Add New" → "Project"**
-3. **Import your GitHub repository**
-4. Click **"Deploy"** (don't configure anything yet)
-5. Wait for the deployment to fail (expected - we need environment variables)
+### Step 2: Create PostgreSQL Database
+1. Go to https://render.com (sign up free)
+2. Click **"New +"** → **"PostgreSQL"**
+3. Name: `crossnconnect-db`
+4. Database: `crossnconnect_waitlist`
+5. User: `crossnconnect`
+6. Region: Choose closest to you
+7. Click **"Create Database"**
+8. Copy the **"Internal Database URL"** (starts with `postgresql://`)
 
-### Step 3: Set Up Free Database (Neon)
-1. Go to https://neon.tech (sign up - it's free)
-2. Click **"Create Project"**
-3. Copy the **Connection String** (starts with `postgresql://...`)
+### Step 3: Deploy Web Service
+1. Click **"New +"** → **"Web Service"**
+2. Connect your GitHub repository
+3. Configure:
+   - **Name**: `crossnconnect-waitlist`
+   - **Region**: Same as database
+   - **Branch**: `main`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm start`
+   - **Instance Type**: Free
 
 ### Step 4: Add Environment Variables
-In your Vercel dashboard:
-1. Go to **Settings → Environment Variables**
-2. Add these three variables:
+In the web service settings, add these environment variables:
 
 ```env
-DATABASE_URL
-postgresql://your-neon-connection-string
-
-AUTH_SECRET
-Dy9i6UGyIuNEVwxzZi1Ih/P4v9sKE6uA+V1db+TJJmc=
-
-NEXTAUTH_URL
-https://your-project-name.vercel.app
-```
-*(Replace `your-project-name` with your actual Vercel URL)*
-
-### Step 5: Redeploy
-1. Go to **Deployments** tab
-2. Click the three dots on the latest deployment
-3. Click **"Redeploy"**
-4. Wait ~2 minutes ⏱️
-
-### Step 6: Initialize Database Schema
-After deployment succeeds, you need to push the database schema:
-
-**Option A - Using Vercel CLI (Recommended):**
-```bash
-npm i -g vercel
-vercel login
-vercel env pull .env.production
-npx prisma db push
+DATABASE_URL=<paste-your-internal-database-url-here>
+AUTH_SECRET=Dy9i6UGyIuNEVwxzZi1Ih/P4v9sKE6uA+V1db+TJJmc=
+NEXTAUTH_URL=https://your-app-name.onrender.com
+NODE_ENV=production
 ```
 
-**Option B - Run locally with production DATABASE_URL:**
+**Replace** `NEXTAUTH_URL` with your actual Render URL (shown after deployment starts)
+
+### Step 5: Deploy
+1. Click **"Create Web Service"**
+2. Wait ~5 minutes for build and deploy
+3. Service will auto-deploy
+
+### Step 6: Initialize Database
+After deployment completes, run locally:
+
 ```bash
-# Copy your Neon DATABASE_URL from Vercel dashboard
-$env:DATABASE_URL="postgresql://your-neon-connection-string"
+# Use the DATABASE_URL you copied earlier
+$env:DATABASE_URL="postgresql://your-render-connection-string"
 npm run prisma:push
-```
-
-### Step 7: Create Admin User
-Run the seed script to create the admin user:
-
-```bash
-$env:DATABASE_URL="your-neon-connection-string"
 npm run prisma:seed
 ```
 
@@ -81,21 +68,12 @@ This creates: `admin@crossconnect.com` / `admin123`
 
 ## ✅ Done!
 
-Your app is live at: `https://your-project-name.vercel.app`
+Your app is live at: `https://your-app-name.onrender.com`
 
 - **Public signup**: `/`
 - **Admin login**: `/backoffice`
 
----
-
-## Alternative: Railway (if Vercel doesn't work)
-
-1. Go to https://railway.app
-2. Click **"Start a New Project"** → **"Deploy from GitHub"**
-3. Select your repo
-4. Click **"Add PostgreSQL"** (free tier included)
-5. Add environment variables (Railway auto-adds DATABASE_URL)
-6. Click **"Deploy"**
+**Note**: Free tier sleeps after 15min of inactivity. First request after sleep takes ~30s.
 
 ---
 
