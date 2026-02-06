@@ -18,8 +18,8 @@ export async function DELETE(
     });
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    if (error.code === 'P2025') {
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'P2025') {
       return NextResponse.json(
         { error: 'Trackable URL not found' },
         { status: 404 }

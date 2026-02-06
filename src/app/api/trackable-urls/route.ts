@@ -34,13 +34,13 @@ export async function GET() {
     });
 
     // Add stats to each URL
-    const urlsWithStats = urls.map((url: any) => ({
+    const urlsWithStats = urls.map((url) => ({
       id: url.id,
       slug: url.slug,
       name: url.name,
       createdAt: url.createdAt,
       totalClicks: url.clicks.length,
-      uniqueClicks: new Set(url.clicks.map((c: any) => c.ipAddress).filter(Boolean)).size,
+      uniqueClicks: new Set(url.clicks.map((c) => c.ipAddress).filter(Boolean)).size,
       lastClickedAt: url.clicks.length > 0 
         ? url.clicks[url.clicks.length - 1].clickedAt 
         : null,
