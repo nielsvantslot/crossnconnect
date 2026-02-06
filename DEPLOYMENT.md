@@ -51,14 +51,28 @@ https://your-project-name.vercel.app
 3. Click **"Redeploy"**
 4. Wait ~2 minutes ⏱️
 
-### Step 6: Create Admin User
-After deployment succeeds:
-1. Go to your Vercel project
-2. Go to **Settings → Functions**
-3. Find the build logs or run this locally with production DATABASE_URL:
+### Step 6: Initialize Database Schema
+After deployment succeeds, you need to push the database schema:
+
+**Option A - Using Vercel CLI (Recommended):**
+```bash
+npm i -g vercel
+vercel login
+vercel env pull .env.production
+npx prisma db push
+```
+
+**Option B - Run locally with production DATABASE_URL:**
+```bash
+# Copy your Neon DATABASE_URL from Vercel dashboard
+$env:DATABASE_URL="postgresql://your-neon-connection-string"
+npm run prisma:push
+```
+
+### Step 7: Create Admin User
+Run the seed script to create the admin user:
 
 ```bash
-# Set your production DATABASE_URL temporarily
 $env:DATABASE_URL="your-neon-connection-string"
 npm run prisma:seed
 ```
