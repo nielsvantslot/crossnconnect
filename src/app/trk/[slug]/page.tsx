@@ -2,9 +2,10 @@ import { notFound, redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import prisma from '@/lib/prisma';
 
-export default async function JoinPage({ params }: { params: { slug: string } }) {
+export default async function JoinPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const trackableUrl = await prisma.trackableUrl.findUnique({
-    where: { slug: params.slug },
+    where: { slug },
   });
 
   if (!trackableUrl) {
@@ -12,7 +13,7 @@ export default async function JoinPage({ params }: { params: { slug: string } })
   }
 
   // Get client IP and user agent
-  const headersList = headers();
+  const headersList = await headers();
   const forwarded = headersList.get('x-forwarded-for');
   const realIp = headersList.get('x-real-ip');
   const ipAddress = forwarded?.split(',')[0] || realIp || null;

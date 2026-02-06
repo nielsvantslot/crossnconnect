@@ -35,7 +35,7 @@ export function LoginForm() {
         router.push('/backoffice/dashboard');
         router.refresh();
       }
-    } catch (error) {
+    } catch {
       setError('Something went wrong');
     } finally {
       setIsLoading(false);

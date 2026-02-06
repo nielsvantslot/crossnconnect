@@ -47,7 +47,7 @@ export async function GET() {
     }));
 
     return NextResponse.json(urlsWithStats);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to fetch trackable URLs' },
       { status: 500 }
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(trackableUrl, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to create trackable URL' },
       { status: 500 }

@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
+import { MemberStatus } from '@prisma/client';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check authentication
@@ -16,6 +17,7 @@ export async function PATCH(
       );
     }
 
+    const { id } = await params;
     const body = await request.json();
     const { status } = body;
 
@@ -29,7 +31,7 @@ export async function PATCH(
 
     // Get the member entry
     const existingEntry = await prisma.member.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!existingEntry) {
@@ -40,7 +42,7 @@ export async function PATCH(
     }
 
     // If accepting, set acceptedAt timestamp
-    const updateData: any = { status };
+    const updateData: { status: MemberStatus; acceptedAt?: Date | null } = { status: status as MemberStatus };
     if (status === 'ACCEPTED') {
       updateData.acceptedAt = new Date();
     } else if (status !== 'ACCEPTED' && existingEntry.acceptedAt) {
@@ -50,13 +52,13 @@ export async function PATCH(
 
     // Update entry status
     const entry = await prisma.member.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
     });
 
     return NextResponse.json(entry);
-  } catch (error: any) {
-    if (error.code === 'P2025') {
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'P2025') {
       return NextResponse.json(
         { error: 'Entry not found' },
         { status: 404 }

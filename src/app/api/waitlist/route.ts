@@ -10,7 +10,7 @@ export async function GET() {
       },
     });
     return NextResponse.json(entries);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to fetch waitlist entries' },
       { status: 500 }
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to join waitlist' },
       { status: 500 }

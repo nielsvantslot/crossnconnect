@@ -39,7 +39,7 @@ export default async function DashboardPage() {
     const dayEnd = new Date(date.setHours(23, 59, 59, 999));
     
     const count = allClicks.filter(
-      (c: any) => c.clickedAt >= dayStart && c.clickedAt <= dayEnd
+      (c) => c.clickedAt >= dayStart && c.clickedAt <= dayEnd
     ).length;
     
     dailyClicks.push({
