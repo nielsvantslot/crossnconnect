@@ -1,0 +1,25 @@
+import { auth } from '@/lib/auth';
+import { redirect } from 'next/navigation';
+import { Sidebar } from '@/components/sidebar';
+
+export default async function BackofficeLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await auth();
+
+  // If not logged in, render children without layout (for login page)
+  if (!session) {
+    return <>{children}</>;
+  }
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar user={session.user!} />
+      <main className="flex-1 overflow-y-auto bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+        {children}
+      </main>
+    </div>
+  );
+}
