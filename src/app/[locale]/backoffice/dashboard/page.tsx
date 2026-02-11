@@ -54,7 +54,7 @@ export default async function DashboardPage({
     const dayEnd = new Date(date.setHours(23, 59, 59, 999));
     
     const count = allClicks.filter(
-      (c) => c.clickedAt >= dayStart && c.clickedAt <= dayEnd
+      (c: { clickedAt: Date }) => c.clickedAt >= dayStart && c.clickedAt <= dayEnd
     ).length;
     
     dailyClicks.push({
@@ -64,7 +64,10 @@ export default async function DashboardPage({
   }
 
   const recentMembers = await prisma.member.findMany({
-    where: { status: 'ACCEPTED' },
+    where: { 
+      status: 'ACCEPTED',
+      acceptedAt: { not: null }
+    },
     orderBy: { acceptedAt: 'desc' },
     take: 5,
   });
@@ -219,7 +222,7 @@ export default async function DashboardPage({
                       <p className="text-xs text-muted-foreground">{member.email}</p>
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      {member.acceptedAt ? new Date(member.acceptedAt).toLocaleDateString(locale) : t('common.notAvailable')}
+                      {member.acceptedAt ? new Date(member.acceptedAt).toLocaleDateString(locale) : 'N/A'}
                     </p>
                   </div>
                 ))}
