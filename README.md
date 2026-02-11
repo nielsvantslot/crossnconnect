@@ -99,6 +99,31 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - `npm run prisma:push` - Push schema changes to database
 - `npm run prisma:studio` - Open Prisma Studio (database GUI)
 
+## Testing
+
+This project includes comprehensive unit tests using Jest and React Testing Library.
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+For detailed testing documentation, best practices, and examples, see [TESTING.md](TESTING.md).
+
+### Test Coverage
+
+The test suite includes:
+- ✅ Component tests for UI components (WaitlistForm, Button, Input)
+- ✅ API route tests with mocked database calls
+- ✅ Utility function tests
+- ✅ Comprehensive edge case and error handling tests
+
 ## API Routes
 
 ### Waitlist
