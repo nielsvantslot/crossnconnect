@@ -19,8 +19,21 @@ export function ResponsiveLayout({ sidebar, children }: ResponsiveLayoutProps) {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  // Handle mobile viewport height with dynamic browser chrome
+  useEffect(() => {
+    const setViewportHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
+    
+    return () => window.removeEventListener('resize', setViewportHeight);
+  }, []);
+
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex overflow-hidden" style={{ height: 'calc(var(--vh, 1vh) * 100)' }}>
       {/* Mobile menu button - stays in fixed position */}
       <Button
         variant="outline"
