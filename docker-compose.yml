@@ -21,12 +21,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev  # Use dev stage for development
     container_name: crossnconnect-app
     restart: unless-stopped
     ports:
       - "3000:3000"
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/crossnconnect_waitlist?schema=public
+      AUTH_SECRET: dev-secret-change-in-production
+      NEXTAUTH_URL: http://localhost:3000
       NODE_ENV: development
       AUTH_SECRET: development-secret-key-change-in-production
       NEXTAUTH_URL: http://localhost:3000

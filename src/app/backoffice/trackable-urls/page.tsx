@@ -1,6 +1,9 @@
 import prisma from '@/lib/prisma';
 import { TrackableUrlsClient } from './trackable-urls-client';
 
+// Force dynamic rendering - this page requires database access
+export const dynamic = 'force-dynamic';
+
 export default async function TrackableUrlsPage() {
   const urls = await prisma.trackableUrl.findMany({
     orderBy: { createdAt: 'desc' },

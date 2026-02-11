@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { rateLimit, getRateLimitIdentifier } from '@/lib/rate-limit';
+import { sanitizeEmail, sanitizeString, isValidEmail, isValidName } from '@/lib/sanitize';
 
 // GET /api/waitlist - Get all waitlist entries
 export async function GET() {
@@ -21,6 +23,15 @@ export async function GET() {
 // POST /api/waitlist - Add new waitlist entry
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: 5 requests per minute per IP
+    const identifier = getRateLimitIdentifier(request);
+    if (!rateLimit(identifier, 5, 60000)) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const { email, name } = body;
 
@@ -32,18 +43,29 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Sanitize inputs
+    const sanitizedEmail = sanitizeEmail(email);
+    const sanitizedName = sanitizeString(name);
+
     // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!isValidEmail(sanitizedEmail)) {
       return NextResponse.json(
         { error: 'Invalid email format' },
         { status: 400 }
       );
     }
 
+    // Validate name format
+    if (!isValidName(sanitizedName)) {
+      return NextResponse.json(
+        { error: 'Invalid name format. Please use only letters, spaces, hyphens, and apostrophes.' },
+        { status: 400 }
+      );
+    }
+
     // Check if email already exists
     const existingEntry = await prisma.member.findUnique({
-      where: { email: email.toLowerCase() },
+      where: { email: sanitizedEmail },
     });
 
     if (existingEntry) {
@@ -56,8 +78,8 @@ export async function POST(request: NextRequest) {
     // Create member entry
     const entry = await prisma.member.create({
       data: {
-        email: email.toLowerCase(),
-        name,
+        email: sanitizedEmail,
+        name: sanitizedName,
       },
     });
 

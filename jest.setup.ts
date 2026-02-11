@@ -22,6 +22,12 @@ jest.mock('next/navigation', () => ({
   },
 }));
 
+// Mock rate limiter to always allow requests in tests
+jest.mock('./src/lib/rate-limit', () => ({
+  rateLimit: jest.fn(() => true),
+  getRateLimitIdentifier: jest.fn(() => 'test-ip'),
+}));
+
 // Mock environment variables
 process.env.DATABASE_URL = 'postgresql://test:test@localhost:5432/test';
 process.env.NEXTAUTH_SECRET = 'test-secret';

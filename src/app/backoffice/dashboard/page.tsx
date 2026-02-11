@@ -1,6 +1,9 @@
 import prisma from '@/lib/prisma';
 import { DashboardClient } from './dashboard-client';
 
+// Force dynamic rendering - this page requires database access
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardPage() {
   const now = new Date();
   const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
