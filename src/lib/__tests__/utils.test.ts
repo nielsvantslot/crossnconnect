@@ -1,4 +1,4 @@
-import { cn } from '../utils';
+import { cn, detectLocaleFromPathname } from '../utils';
 
 describe('cn utility function', () => {
   it('merges class names correctly', () => {
@@ -53,9 +53,6 @@ describe('cn utility function', () => {
 });
 
 describe('detectLocaleFromPathname', () => {
-  // Import the function
-  const { detectLocaleFromPathname } = require('../utils');
-
   describe('English locale detection', () => {
     it('detects English from /en prefix', () => {
       expect(detectLocaleFromPathname('/en')).toBe('en');
