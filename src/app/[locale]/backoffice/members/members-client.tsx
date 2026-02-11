@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/i18n/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface Member {
@@ -11,23 +12,25 @@ interface Member {
 }
 
 interface MembersClientProps {
+  lng: string;
   members: Member[];
 }
 
-export function MembersClient({ members }: MembersClientProps) {
+export function MembersClient({ lng, members }: MembersClientProps) {
+  const { t } = useTranslation(lng, 'common');
   return (
     <div className="container mx-auto p-6 max-w-6xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Members</h1>
+        <h1 className="text-3xl font-bold">{t('backoffice.members.title')}</h1>
         <p className="text-muted-foreground mt-1">
-          All accepted members of Cross & Connect Club
+          {t('backoffice.members.description')}
         </p>
       </div>
 
         <div className="grid gap-6 mb-6 md:grid-cols-3">
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium">Total Members</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('backoffice.members.totalMembers')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{members.length}</div>
@@ -35,7 +38,7 @@ export function MembersClient({ members }: MembersClientProps) {
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium">This Week</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('backoffice.members.thisWeek')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
@@ -51,7 +54,7 @@ export function MembersClient({ members }: MembersClientProps) {
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium">Today</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('backoffice.members.today')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
@@ -69,9 +72,9 @@ export function MembersClient({ members }: MembersClientProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Club Members</CardTitle>
+            <CardTitle>{t('backoffice.members.clubMembers')}</CardTitle>
             <CardDescription>
-              All accepted members of Cross & Connect Club
+              {t('backoffice.members.description')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -80,16 +83,16 @@ export function MembersClient({ members }: MembersClientProps) {
                 <thead className="text-xs uppercase bg-muted">
                   <tr>
                     <th scope="col" className="px-6 py-3">
-                      Name
+                      {t('backoffice.members.table.name')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Email
+                      {t('backoffice.members.table.email')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Joined
+                      {t('backoffice.members.table.joined')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Signed Up
+                      {t('backoffice.members.table.signedUp')}
                     </th>
                   </tr>
                 </thead>
@@ -97,7 +100,7 @@ export function MembersClient({ members }: MembersClientProps) {
                   {members.length === 0 ? (
                     <tr>
                       <td colSpan={4} className="px-6 py-4 text-center text-muted-foreground">
-                        No members yet
+                        {t('backoffice.members.noMembers')}
                       </td>
                     </tr>
                   ) : (

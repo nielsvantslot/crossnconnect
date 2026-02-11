@@ -4,7 +4,12 @@ import { TrackableUrlsClient } from './trackable-urls-client';
 // Force dynamic rendering - this page requires database access
 export const dynamic = 'force-dynamic';
 
-export default async function TrackableUrlsPage() {
+export default async function TrackableUrlsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const urls = await prisma.trackableUrl.findMany({
     orderBy: { createdAt: 'desc' },
     include: {
@@ -31,5 +36,5 @@ export default async function TrackableUrlsPage() {
       : null,
   }));
 
-  return <TrackableUrlsClient urls={urlsWithStats} />;
+  return <TrackableUrlsClient lng={locale} urls={urlsWithStats} />;
 }

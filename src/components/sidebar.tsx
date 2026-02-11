@@ -2,8 +2,9 @@
 
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Users, Clock, X as XIcon, LogOut, User, LayoutDashboard, Link2 } from 'lucide-react';
+import { usePathname, useParams } from 'next/navigation';
+import { useTranslation } from '@/i18n/client';
+import { Users, Clock, LogOut, User, LayoutDashboard, Link2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface SidebarProps {
@@ -15,41 +16,38 @@ interface SidebarProps {
 
 export function Sidebar({ user }: SidebarProps) {
   const pathname = usePathname();
+  const params = useParams();
+  const locale = params.locale as string;
+  const { t } = useTranslation(locale, 'common');
 
   const dashboardItem = {
-    href: '/backoffice/dashboard',
-    label: 'Dashboard',
+    href: `/${locale}/backoffice/dashboard`,
+    label: t('backoffice.sidebar.dashboard'),
     icon: LayoutDashboard,
-    active: pathname === '/backoffice/dashboard' || pathname === '/backoffice',
+    active: pathname === `/${locale}/backoffice/dashboard` || pathname === `/${locale}/backoffice`,
   };
 
   const membershipItems = [
     {
-      href: '/backoffice/waitlist',
-      label: 'Waitlist',
+      href: `/${locale}/backoffice/waitlist`,
+      label: t('backoffice.sidebar.waitlist'),
       icon: Clock,
-      active: pathname === '/backoffice/waitlist',
+      active: pathname === `/${locale}/backoffice/waitlist`,
     },
     {
-      href: '/backoffice/members',
-      label: 'Members',
+      href: `/${locale}/backoffice/members`,
+      label: t('backoffice.sidebar.members'),
       icon: Users,
-      active: pathname === '/backoffice/members',
-    },
-    {
-      href: '/backoffice/denied',
-      label: 'Denied',
-      icon: XIcon,
-      active: pathname === '/backoffice/denied',
+      active: pathname === `/${locale}/backoffice/members`,
     },
   ];
 
   const marketingItems = [
     {
-      href: '/backoffice/trackable-urls',
-      label: 'Trackable URLs',
+      href: `/${locale}/backoffice/trackable-urls`,
+      label: t('backoffice.sidebar.trackableUrls'),
       icon: Link2,
-      active: pathname === '/backoffice/trackable-urls',
+      active: pathname === `/${locale}/backoffice/trackable-urls`,
     },
   ];
 
@@ -140,10 +138,10 @@ export function Sidebar({ user }: SidebarProps) {
         <Button
           variant="outline"
           className="w-full"
-          onClick={() => signOut({ callbackUrl: '/backoffice' })}
+          onClick={() => signOut({ callbackUrl: `/${locale}/backoffice` })}
         >
           <LogOut className="h-4 w-4 mr-2" />
-          Sign Out
+          {t('backoffice.sidebar.signOut')}
         </Button>
       </div>
     </div>

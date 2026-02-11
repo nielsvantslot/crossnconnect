@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-export function WaitlistForm() {
+export function WaitlistForm({ lng }: { lng: string }) {
+  const { t } = useTranslation(lng, 'common');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -28,14 +30,14 @@ export function WaitlistForm() {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage({ type: 'success', text: data.message });
+        setMessage({ type: 'success', text: t('waitlist.successMessage') });
         setEmail('');
         setName('');
       } else {
-        setMessage({ type: 'error', text: data.error || 'Something went wrong' });
+        setMessage({ type: 'error', text: data.error || t('waitlist.errorGeneric') });
       }
     } catch {
-      setMessage({ type: 'error', text: 'Failed to join waitlist. Please try again.' });
+      setMessage({ type: 'error', text: t('waitlist.errorMessage') });
     } finally {
       setIsLoading(false);
     }
@@ -46,12 +48,12 @@ export function WaitlistForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
           <Label htmlFor="name" className="text-sm font-normal text-slate-600 dark:text-slate-400">
-            Name
+            {t('waitlist.nameLabel')}
           </Label>
           <Input
             id="name"
             type="text"
-            placeholder="John Doe"
+            placeholder={t('waitlist.namePlaceholder')}
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -62,12 +64,12 @@ export function WaitlistForm() {
         
         <div className="space-y-2">
           <Label htmlFor="email" className="text-sm font-normal text-slate-600 dark:text-slate-400">
-            Email
+            {t('waitlist.emailLabel')}
           </Label>
           <Input
             id="email"
             type="email"
-            placeholder="johnsmith@example.com"
+            placeholder={t('waitlist.emailPlaceholder')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -93,7 +95,7 @@ export function WaitlistForm() {
           className="w-full h-12 text-white text-base font-semibold rounded-md shadow-none" 
           disabled={isLoading}
         >
-          {isLoading ? 'Joining...' : 'Get on the waitlist'}
+          {isLoading ? t('waitlist.submitting') : t('waitlist.submitButton')}
         </Button>
       </form>
     </div>

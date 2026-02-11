@@ -1,35 +1,6 @@
-import { WaitlistForm } from '@/components/waitlist-form';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
-  return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Left Side - Hero */}
-      <div className="w-full md:w-1/2 bg-gradient-to-br from-blue-600 via-purple-600 to-purple-700 p-8 md:p-16 lg:p-20 flex flex-col justify-between text-white min-h-[40vh] md:min-h-screen">
-        <div className="flex-1 flex flex-col justify-center gap-24">
-          <div className="max-w-xl">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
-              Cross & Connect
-            </h1>
-          </div>
-          <div className="max-w-md">
-            <p className="text-lg md:text-xl text-white/95 leading-relaxed">
-              Join our exclusive community and be part of something extraordinary
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Side - Form */}
-      <div className="w-full md:w-1/2 bg-slate-50 dark:bg-slate-900 p-8 md:p-16 flex items-center justify-center">
-        <div className="w-full max-w-md">
-          <div className="mb-8 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3">
-              Join the Waitlist
-            </h2>
-          </div>
-          <WaitlistForm />
-        </div>
-      </div>
-    </div>
-  );
+// This page only renders when the user is at the root path
+export default function RootPage() {
+  redirect('/en');
 }

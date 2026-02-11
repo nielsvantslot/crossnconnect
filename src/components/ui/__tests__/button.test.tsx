@@ -62,13 +62,13 @@ describe('Button Component', () => {
   it('supports asChild prop with Slot', () => {
     render(
       <Button asChild>
-        <a href="/test">Link as Button</a>
+        <a href="https://example.com">Link as Button</a>
       </Button>
     );
     
     const link = screen.getByRole('link');
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', '/test');
+    expect(link).toHaveAttribute('href', 'https://example.com');
   });
 
   it('applies default variant and size when not specified', () => {

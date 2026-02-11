@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
+import { useTranslation } from '@/i18n/client';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +12,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export function LoginForm() {
   const router = useRouter();
+  const params = useParams();
+  const locale = params.locale as string;
+  const { t } = useTranslation(locale, 'common');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -30,13 +34,13 @@ export function LoginForm() {
       });
 
       if (result?.error) {
-        setError('Invalid email or password');
+        setError(t('backoffice.login.invalidCredentials'));
       } else {
-        router.push('/backoffice/dashboard');
+        router.push(`/${locale}/backoffice/dashboard`);
         router.refresh();
       }
     } catch {
-      setError('Something went wrong');
+      setError(t('backoffice.login.errorGeneric'));
     } finally {
       setIsLoading(false);
     }
@@ -46,19 +50,19 @@ export function LoginForm() {
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">Backoffice Login</CardTitle>
+          <CardTitle className="text-2xl">{t('backoffice.login.title')}</CardTitle>
           <CardDescription>
-            Sign in to access the waitlist dashboard
+            {t('backoffice.login.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('backoffice.login.emailLabel')}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="admin@example.com"
+                placeholder={t('backoffice.login.emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -66,12 +70,12 @@ export function LoginForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('backoffice.login.passwordLabel')}</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="••••••••"
+                  placeholder={t('backoffice.login.passwordPlaceholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -101,10 +105,10 @@ export function LoginForm() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Signing in...
+                  {t('backoffice.login.signingIn')}
                 </>
               ) : (
-                'Sign In'
+                t('backoffice.login.submitButton')
               )}
             </Button>
           </form>

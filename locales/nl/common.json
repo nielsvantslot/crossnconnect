@@ -1,0 +1,129 @@
+{
+  "backoffice": {
+    "dashboard": {
+      "acceptanceRateLabel": "acceptatiepercentage",
+      "activeMembers": "Actieve Leden",
+      "allTimeMembers": "Alle leden ooit",
+      "awaitingDecision": "In afwachting van beslissing",
+      "awaitingYourReview": "Wacht op uw beoordeling",
+      "clicks": "Klikken",
+      "denied": "Afgewezen",
+      "growthFromLastWeek": "groei t.o.v. vorige week",
+      "growthMarketing": "Groei & Marketing",
+      "latestAcceptedMembers": "Laatst geaccepteerde leden",
+      "linkVisits": "Link Bezoeken (14 dagen)",
+      "membershipOverview": "Ledenschap Overzicht",
+      "noMembersYet": "Nog geen leden",
+      "noPendingApplications": "Geen aanvragen in behandeling",
+      "pendingApplications": "Aanvragen in Behandeling",
+      "pendingReview": "In Behandeling",
+      "recentActivity": "Recente Activiteit",
+      "recentMembers": "Recente Leden",
+      "rejectedApplications": "Afgewezen aanvragen",
+      "title": "Dashboard",
+      "totalClicksLabel": "totaal klikken",
+      "totalSignups": "Totale Aanmeldingen",
+      "trackableLinks": "Traceerbare Links",
+      "viewAll": "Bekijk Alles",
+      "welcome": "Welkom terug! Hier is je wachtlijst overzicht"
+    },
+    "login": {
+      "description": "Log in om toegang te krijgen tot het wachtlijst dashboard",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "admin@voorbeeld.nl",
+      "errorGeneric": "Er is iets misgegaan",
+      "invalidCredentials": "Ongeldig e-mailadres of wachtwoord",
+      "passwordLabel": "Wachtwoord",
+      "passwordPlaceholder": "••••••••",
+      "signingIn": "Bezig met inloggen...",
+      "submitButton": "Inloggen",
+      "title": "Backoffice Inloggen"
+    },
+    "members": {
+      "clubMembers": "Club Leden",
+      "description": "Alle geaccepteerde leden van Cross & Connect Club",
+      "noMembers": "Nog geen leden",
+      "table": {
+        "email": "E-mail",
+        "joined": "Lid Geworden",
+        "name": "Naam",
+        "signedUp": "Ingeschreven"
+      },
+      "thisWeek": "Deze Week",
+      "title": "Leden",
+      "today": "Vandaag",
+      "totalMembers": "Totaal Leden"
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "members": "Leden",
+      "signOut": "Uitloggen",
+      "trackableUrls": "Traceerbare URLs",
+      "waitlist": "Wachtlijst"
+    },
+    "trackableUrls": {
+      "allLinksDescription": "Al jouw traceerbare URLs en hun prestaties",
+      "campaignName": "Campagne Naam",
+      "campaignPlaceholder": "bijv., Twitter Campagne, E-mail Nieuwsbrief",
+      "confirmDelete": "Weet je zeker dat je deze traceerbare URL wilt verwijderen?",
+      "copied": "Gekopieerd",
+      "copy": "Kopiëren",
+      "createLink": "Link Aanmaken",
+      "createNew": "Nieuwe Traceerbare URL Aanmaken",
+      "description": "Creëer en beheer traceerbare aanmeldingslinks",
+      "generateDescription": "Genereer een unieke link om aanmeldingen van verschillende bronnen te volgen",
+      "never": "Nooit",
+      "noUrls": "Nog geen traceerbare URLs. Maak er één hierboven!",
+      "table": {
+        "actions": "Acties",
+        "lastClicked": "Laatst Geklikt",
+        "name": "Naam",
+        "totalClicks": "Totaal Klikken",
+        "uniqueClicks": "Unieke Klikken",
+        "url": "URL"
+      },
+      "title": "Traceerbare URLs",
+      "totalClicks": "Totaal Klikken",
+      "totalLinks": "Totaal Links",
+      "uniqueVisitors": "Unieke Bezoekers",
+      "yourLinks": "Jouw Traceerbare Links"
+    },
+    "waitlist": {
+      "accept": "Accepteren",
+      "deny": "Afwijzen",
+      "description": "Bekijk en beheer aanvragen in behandeling",
+      "noPendingEntries": "Geen aanvragen in behandeling",
+      "pendingApplications": "Aanvragen in Behandeling",
+      "pendingReview": "In Behandeling",
+      "reviewAndTakeAction": "Bekijk en neem actie op wachtlijst aanvragen in behandeling",
+      "table": {
+        "actions": "Acties",
+        "email": "E-mail",
+        "name": "Naam",
+        "signedUp": "Ingeschreven"
+      },
+      "title": "Wachtlijst"
+    }
+  },
+  "home": {
+    "subtitle": "Word lid van onze exclusieve community en maak deel uit van iets buitengewoons",
+    "title": "Cross & Connect",
+    "waitlistTitle": "Schrijf je in op de wachtlijst"
+  },
+  "notFound": {
+    "backToHome": "Terug naar Home",
+    "description": "Sorry, we konden de pagina die je zoekt niet vinden.",
+    "title": "Pagina Niet Gevonden"
+  },
+  "waitlist": {
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "janjansen@voorbeeld.nl",
+    "errorGeneric": "Er is iets misgegaan",
+    "errorMessage": "Inschrijven mislukt. Probeer het opnieuw.",
+    "nameLabel": "Naam",
+    "namePlaceholder": "Jan Jansen",
+    "submitButton": "Schrijf je in",
+    "submitting": "Bezig met inschrijven...",
+    "successMessage": "Je bent succesvol ingeschreven op de wachtlijst!"
+  }
+}

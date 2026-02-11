@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Copy, Trash2, Plus, Check } from 'lucide-react';
+import { useTranslation } from '@/i18n/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -19,10 +20,12 @@ interface TrackableUrl {
 }
 
 interface TrackableUrlsClientProps {
+  lng: string;
   urls: TrackableUrl[];
 }
 
-export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
+export function TrackableUrlsClient({ lng, urls }: TrackableUrlsClientProps) {
+  const { t } = useTranslation(lng, 'common');
   const router = useRouter();
   const [name, setName] = useState('');
   const [creating, setCreating] = useState(false);
@@ -52,7 +55,7 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
   };
 
   const deleteUrl = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this trackable URL?')) return;
+    if (!confirm(t('backoffice.trackableUrls.confirmDelete'))) return;
 
     setDeletingId(id);
     try {
@@ -80,26 +83,26 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
   return (
     <div className="container mx-auto p-6 max-w-6xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Trackable URLs</h1>
+        <h1 className="text-3xl font-bold">{t('backoffice.trackableUrls.title')}</h1>
         <p className="text-muted-foreground mt-1">
-          Create and manage trackable signup links
+          {t('backoffice.trackableUrls.description')}
         </p>
       </div>
 
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle>Create New Trackable URL</CardTitle>
+          <CardTitle>{t('backoffice.trackableUrls.createNew')}</CardTitle>
           <CardDescription>
-            Generate a unique link to track signups from different sources
+            {t('backoffice.trackableUrls.generateDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex gap-4">
             <div className="flex-1">
-              <Label htmlFor="name">Campaign Name</Label>
+              <Label htmlFor="name">{t('backoffice.trackableUrls.campaignName')}</Label>
               <Input
                 id="name"
-                placeholder="e.g., Twitter Campaign, Email Newsletter"
+                placeholder={t('backoffice.trackableUrls.campaignPlaceholder')}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && createUrl()}
@@ -108,7 +111,7 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
             <div className="flex items-end">
               <Button onClick={createUrl} disabled={creating || !name.trim()}>
                 <Plus className="h-4 w-4 mr-2" />
-                Create Link
+                {t('backoffice.trackableUrls.createLink')}
               </Button>
             </div>
           </div>
@@ -119,7 +122,7 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
         <Card>
           <CardHeader>
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Links
+              {t('backoffice.trackableUrls.totalLinks')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -129,7 +132,7 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
         <Card>
           <CardHeader>
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Clicks
+              {t('backoffice.trackableUrls.totalClicks')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -141,7 +144,7 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
         <Card>
           <CardHeader>
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Unique Visitors
+              {t('backoffice.trackableUrls.uniqueVisitors')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -154,9 +157,9 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Your Trackable Links</CardTitle>
+          <CardTitle>{t('backoffice.trackableUrls.yourLinks')}</CardTitle>
           <CardDescription>
-            All your trackable URLs and their performance
+            {t('backoffice.trackableUrls.allLinksDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -165,22 +168,22 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
               <thead className="text-xs uppercase bg-muted">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Name
+                    {t('backoffice.trackableUrls.table.name')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    URL
+                    {t('backoffice.trackableUrls.table.url')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Total Clicks
+                    {t('backoffice.trackableUrls.table.totalClicks')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Unique Clicks
+                    {t('backoffice.trackableUrls.table.uniqueClicks')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Last Clicked
+                    {t('backoffice.trackableUrls.table.lastClicked')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Actions
+                    {t('backoffice.trackableUrls.table.actions')}
                   </th>
                 </tr>
               </thead>
@@ -188,7 +191,7 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
                 {urls.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="px-6 py-4 text-center text-muted-foreground">
-                      No trackable URLs yet. Create one above!
+                      {t('backoffice.trackableUrls.noUrls')}
                     </td>
                   </tr>
                 ) : (
@@ -209,7 +212,7 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
                               month: 'short',
                               day: 'numeric',
                             })
-                          : 'Never'}
+                          : t('backoffice.trackableUrls.never')}
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex gap-2">
@@ -222,12 +225,12 @@ export function TrackableUrlsClient({ urls }: TrackableUrlsClientProps) {
                             {copiedSlug === url.slug ? (
                               <>
                                 <Check className="h-4 w-4 mr-1" />
-                                Copied
+                                {t('backoffice.trackableUrls.copied')}
                               </>
                             ) : (
                               <>
                                 <Copy className="h-4 w-4 mr-1" />
-                                Copy
+                                {t('backoffice.trackableUrls.copy')}
                               </>
                             )}
                           </Button>

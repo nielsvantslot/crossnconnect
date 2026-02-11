@@ -11,7 +11,7 @@ describe('WaitlistForm', () => {
   });
 
   it('renders the form with name and email inputs', () => {
-    render(<WaitlistForm />);
+    render(<WaitlistForm lng="en" />);
     
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
@@ -19,7 +19,7 @@ describe('WaitlistForm', () => {
   });
 
   it('displays validation error when form is submitted empty', async () => {
-    render(<WaitlistForm />);
+    render(<WaitlistForm lng="en" />);
     const user = userEvent.setup();
     
     const submitButton = screen.getByRole('button', { name: /get on the waitlist/i });
@@ -35,7 +35,7 @@ describe('WaitlistForm', () => {
       json: async () => ({ message: 'Successfully joined the waitlist!' }),
     });
 
-    render(<WaitlistForm />);
+    render(<WaitlistForm lng="en" />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i);
@@ -65,7 +65,7 @@ describe('WaitlistForm', () => {
       json: async () => ({ error: 'Email already exists' }),
     });
 
-    render(<WaitlistForm />);
+    render(<WaitlistForm lng="en" />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i);
@@ -82,7 +82,7 @@ describe('WaitlistForm', () => {
   it('displays generic error message on network failure', async () => {
     (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
 
-    render(<WaitlistForm />);
+    render(<WaitlistForm lng="en" />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i);
@@ -104,7 +104,7 @@ describe('WaitlistForm', () => {
       }), 100))
     );
 
-    render(<WaitlistForm />);
+    render(<WaitlistForm lng="en" />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i);
@@ -129,7 +129,7 @@ describe('WaitlistForm', () => {
       json: async () => ({ message: 'Successfully joined the waitlist!' }),
     });
 
-    render(<WaitlistForm />);
+    render(<WaitlistForm lng="en" />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i) as HTMLInputElement;
@@ -154,7 +154,7 @@ describe('WaitlistForm', () => {
       }), 100))
     );
 
-    render(<WaitlistForm />);
+    render(<WaitlistForm lng="en" />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i);

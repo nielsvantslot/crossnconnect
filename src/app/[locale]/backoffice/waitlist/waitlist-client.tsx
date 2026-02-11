@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, X } from 'lucide-react';
+import { useTranslation } from '@/i18n/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -15,10 +16,12 @@ interface Member {
 }
 
 interface BackofficeClientProps {
+  lng: string;
   entries: Member[];
 }
 
-export function BackofficeClient({ entries }: BackofficeClientProps) {
+export function BackofficeClient({ lng, entries }: BackofficeClientProps) {
+  const { t } = useTranslation(lng, 'common');
   const router = useRouter();
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
@@ -46,16 +49,16 @@ export function BackofficeClient({ entries }: BackofficeClientProps) {
   return (
     <div className="container mx-auto p-6 max-w-6xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Waitlist</h1>
+        <h1 className="text-3xl font-bold">{t('backoffice.waitlist.title')}</h1>
         <p className="text-muted-foreground mt-1">
-          Review and manage pending applications
+          {t('backoffice.waitlist.description')}
         </p>
       </div>
 
       <div className="grid gap-6 mb-6 md:grid-cols-1">
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Pending Review</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('backoffice.waitlist.pendingReview')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{entries.length}</div>
@@ -65,9 +68,9 @@ export function BackofficeClient({ entries }: BackofficeClientProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Pending Applications</CardTitle>
+          <CardTitle>{t('backoffice.waitlist.pendingApplications')}</CardTitle>
           <CardDescription>
-            Review and take action on pending waitlist applications
+            {t('backoffice.waitlist.reviewAndTakeAction')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -76,16 +79,16 @@ export function BackofficeClient({ entries }: BackofficeClientProps) {
               <thead className="text-xs uppercase bg-muted">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Name
+                    {t('backoffice.waitlist.table.name')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Email
+                    {t('backoffice.waitlist.table.email')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Signed Up
+                    {t('backoffice.waitlist.table.signedUp')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Actions
+                    {t('backoffice.waitlist.table.actions')}
                   </th>
                 </tr>
               </thead>
@@ -93,7 +96,7 @@ export function BackofficeClient({ entries }: BackofficeClientProps) {
                 {entries.length === 0 ? (
                   <tr>
                     <td colSpan={4} className="px-6 py-4 text-center text-muted-foreground">
-                      No pending entries
+                      {t('backoffice.waitlist.noPendingEntries')}
                     </td>
                   </tr>
                 ) : (
@@ -119,7 +122,7 @@ export function BackofficeClient({ entries }: BackofficeClientProps) {
                             disabled={updatingId === entry.id}
                           >
                             <Check className="h-4 w-4 mr-1" />
-                            Accept
+                            {t('backoffice.waitlist.accept')}
                           </Button>
                           <Button
                             size="sm"
@@ -128,7 +131,7 @@ export function BackofficeClient({ entries }: BackofficeClientProps) {
                             disabled={updatingId === entry.id}
                           >
                             <X className="h-4 w-4 mr-1" />
-                            Deny
+                            {t('backoffice.waitlist.deny')}
                           </Button>
                         </div>
                       </td>

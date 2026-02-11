@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useTranslation } from '@/i18n/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Users, Clock, CheckCircle, XCircle, TrendingUp, Link2 } from 'lucide-react';
@@ -34,67 +36,71 @@ interface DailyClick {
 }
 
 interface DashboardClientProps {
+  lng: string;
   stats: DashboardStats;
   recentMembers: Member[];
   recentPending: Member[];
   dailyClicks: DailyClick[];
 }
 
-export function DashboardClient({ stats, recentMembers, recentPending, dailyClicks }: DashboardClientProps) {
+export function DashboardClient({ lng, stats, recentMembers, recentPending, dailyClicks }: DashboardClientProps) {
+  const { t } = useTranslation(lng, 'common');
+  const params = useParams();
+  const locale = params.locale as string;
   return (
     <div className="container mx-auto p-6 max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <h1 className="text-3xl font-bold">{t('backoffice.dashboard.title')}</h1>
         <p className="text-muted-foreground mt-1">
-          Welcome back! Here&apos;s your waitlist overview
+          {t('backoffice.dashboard.welcome')}
         </p>
       </div>
 
       {/* Membership Overview */}
       <div className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">Membership Overview</h2>
+        <h2 className="text-lg font-semibold mb-4">{t('backoffice.dashboard.membershipOverview')}</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Signups</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('backoffice.dashboard.totalSignups')}</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.total}</div>
-              <p className="text-xs text-muted-foreground mt-1">All-time members</p>
+              <p className="text-xs text-muted-foreground mt-1">{t('backoffice.dashboard.allTimeMembers')}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Members</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('backoffice.dashboard.activeMembers')}</CardTitle>
               <CheckCircle className="h-4 w-4 text-green-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.accepted}</div>
-              <p className="text-xs text-muted-foreground mt-1">{stats.acceptanceRate}% acceptance rate</p>
+              <p className="text-xs text-muted-foreground mt-1">{stats.acceptanceRate}% {t('backoffice.dashboard.acceptanceRateLabel')}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Review</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('backoffice.dashboard.pendingReview')}</CardTitle>
               <Clock className="h-4 w-4 text-yellow-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.pending}</div>
-              <p className="text-xs text-muted-foreground mt-1">Awaiting decision</p>
+              <p className="text-xs text-muted-foreground mt-1">{t('backoffice.dashboard.awaitingDecision')}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Denied</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('backoffice.dashboard.denied')}</CardTitle>
               <XCircle className="h-4 w-4 text-red-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.denied}</div>
-              <p className="text-xs text-muted-foreground mt-1">Rejected applications</p>
+              <p className="text-xs text-muted-foreground mt-1">{t('backoffice.dashboard.rejectedApplications')}</p>
             </CardContent>
           </Card>
         </div>
@@ -102,18 +108,18 @@ export function DashboardClient({ stats, recentMembers, recentPending, dailyClic
 
       {/* Growth & Marketing */}
       <div className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">Growth & Marketing</h2>
+        <h2 className="text-lg font-semibold mb-4">{t('backoffice.dashboard.growthMarketing')}</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle>Link Visits (14 days)</CardTitle>
+                  <CardTitle>{t('backoffice.dashboard.linkVisits')}</CardTitle>
                   <CardDescription className="mt-1">
                     <span className={`font-semibold ${stats.growthRate >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                       {stats.growthRate > 0 ? '+' : ''}{stats.growthRate}%
                     </span>
-                    {' '}growth from last week
+                    {' '}{t('backoffice.dashboard.growthFromLastWeek')}
                   </CardDescription>
                 </div>
                 <TrendingUp className={`h-4 w-4 ${stats.growthRate >= 0 ? 'text-green-600' : 'text-red-600'}`} />
@@ -123,7 +129,7 @@ export function DashboardClient({ stats, recentMembers, recentPending, dailyClic
               <ChartContainer
                 config={{
                   clicks: {
-                    label: "Clicks",
+                    label: t('backoffice.dashboard.clicks'),
                     color: "hsl(var(--primary))",
                   },
                 }}
@@ -155,12 +161,12 @@ export function DashboardClient({ stats, recentMembers, recentPending, dailyClic
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Trackable Links</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('backoffice.dashboard.trackableLinks')}</CardTitle>
               <Link2 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.trackableUrls}</div>
-              <p className="text-xs text-muted-foreground mt-1">{stats.totalClicks} total clicks</p>
+              <p className="text-xs text-muted-foreground mt-1">{stats.totalClicks} {t('backoffice.dashboard.totalClicksLabel')}</p>
             </CardContent>
           </Card>
         </div>
@@ -168,24 +174,24 @@ export function DashboardClient({ stats, recentMembers, recentPending, dailyClic
 
       {/* Recent Activity */}
       <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
+        <h2 className="text-lg font-semibold mb-4">{t('backoffice.dashboard.recentActivity')}</h2>
       </div>
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle>Recent Members</CardTitle>
-              <CardDescription>Latest accepted members</CardDescription>
+              <CardTitle>{t('backoffice.dashboard.recentMembers')}</CardTitle>
+              <CardDescription>{t('backoffice.dashboard.latestAcceptedMembers')}</CardDescription>
             </div>
-            <Link href="/backoffice/members">
+            <Link href={`/${locale}/backoffice/members`}>
               <Button variant="ghost" size="sm">
-                View All <ArrowRight className="ml-2 h-4 w-4" />
+                {t('backoffice.dashboard.viewAll')} <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </CardHeader>
           <CardContent>
             {recentMembers.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No members yet</p>
+              <p className="text-sm text-muted-foreground">{t('backoffice.dashboard.noMembersYet')}</p>
             ) : (
               <div className="space-y-3">
                 {recentMembers.map((member) => (
@@ -207,18 +213,18 @@ export function DashboardClient({ stats, recentMembers, recentPending, dailyClic
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle>Pending Applications</CardTitle>
-              <CardDescription>Awaiting your review</CardDescription>
+              <CardTitle>{t('backoffice.dashboard.pendingApplications')}</CardTitle>
+              <CardDescription>{t('backoffice.dashboard.awaitingYourReview')}</CardDescription>
             </div>
-            <Link href="/backoffice/waitlist">
+            <Link href={`/${locale}/backoffice/waitlist`}>
               <Button variant="ghost" size="sm">
-                View All <ArrowRight className="ml-2 h-4 w-4" />
+                {t('backoffice.dashboard.viewAll')} <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </CardHeader>
           <CardContent>
             {recentPending.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No pending applications</p>
+              <p className="text-sm text-muted-foreground">{t('backoffice.dashboard.noPendingApplications')}</p>
             ) : (
               <div className="space-y-3">
                 {recentPending.map((member) => (

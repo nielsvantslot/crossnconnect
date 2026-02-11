@@ -1,0 +1,129 @@
+{
+  "backoffice": {
+    "dashboard": {
+      "acceptanceRateLabel": "acceptance rate",
+      "activeMembers": "Active Members",
+      "allTimeMembers": "All-time members",
+      "awaitingDecision": "Awaiting decision",
+      "awaitingYourReview": "Awaiting your review",
+      "clicks": "Clicks",
+      "denied": "Denied",
+      "growthFromLastWeek": "growth from last week",
+      "growthMarketing": "Growth & Marketing",
+      "latestAcceptedMembers": "Latest accepted members",
+      "linkVisits": "Link Visits (14 days)",
+      "membershipOverview": "Membership Overview",
+      "noMembersYet": "No members yet",
+      "noPendingApplications": "No pending applications",
+      "pendingApplications": "Pending Applications",
+      "pendingReview": "Pending Review",
+      "recentActivity": "Recent Activity",
+      "recentMembers": "Recent Members",
+      "rejectedApplications": "Rejected applications",
+      "title": "Dashboard",
+      "totalClicksLabel": "total clicks",
+      "totalSignups": "Total Signups",
+      "trackableLinks": "Trackable Links",
+      "viewAll": "View All",
+      "welcome": "Welcome back! Here's your waitlist overview"
+    },
+    "login": {
+      "description": "Sign in to access the waitlist dashboard",
+      "emailLabel": "Email",
+      "emailPlaceholder": "admin@example.com",
+      "errorGeneric": "Something went wrong",
+      "invalidCredentials": "Invalid email or password",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "signingIn": "Signing in...",
+      "submitButton": "Sign In",
+      "title": "Backoffice Login"
+    },
+    "members": {
+      "clubMembers": "Club Members",
+      "description": "All accepted members of Cross & Connect Club",
+      "noMembers": "No members yet",
+      "table": {
+        "email": "Email",
+        "joined": "Joined",
+        "name": "Name",
+        "signedUp": "Signed Up"
+      },
+      "thisWeek": "This Week",
+      "title": "Members",
+      "today": "Today",
+      "totalMembers": "Total Members"
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "members": "Members",
+      "signOut": "Sign Out",
+      "trackableUrls": "Trackable URLs",
+      "waitlist": "Waitlist"
+    },
+    "trackableUrls": {
+      "allLinksDescription": "All your trackable URLs and their performance",
+      "campaignName": "Campaign Name",
+      "campaignPlaceholder": "e.g., Twitter Campaign, Email Newsletter",
+      "confirmDelete": "Are you sure you want to delete this trackable URL?",
+      "copied": "Copied",
+      "copy": "Copy",
+      "createLink": "Create Link",
+      "createNew": "Create New Trackable URL",
+      "description": "Create and manage trackable signup links",
+      "generateDescription": "Generate a unique link to track signups from different sources",
+      "never": "Never",
+      "noUrls": "No trackable URLs yet. Create one above!",
+      "table": {
+        "actions": "Actions",
+        "lastClicked": "Last Clicked",
+        "name": "Name",
+        "totalClicks": "Total Clicks",
+        "uniqueClicks": "Unique Clicks",
+        "url": "URL"
+      },
+      "title": "Trackable URLs",
+      "totalClicks": "Total Clicks",
+      "totalLinks": "Total Links",
+      "uniqueVisitors": "Unique Visitors",
+      "yourLinks": "Your Trackable Links"
+    },
+    "waitlist": {
+      "accept": "Accept",
+      "deny": "Deny",
+      "description": "Review and manage pending applications",
+      "noPendingEntries": "No pending entries",
+      "pendingApplications": "Pending Applications",
+      "pendingReview": "Pending Review",
+      "reviewAndTakeAction": "Review and take action on pending waitlist applications",
+      "table": {
+        "actions": "Actions",
+        "email": "Email",
+        "name": "Name",
+        "signedUp": "Signed Up"
+      },
+      "title": "Waitlist"
+    }
+  },
+  "home": {
+    "subtitle": "Join our exclusive community and be part of something extraordinary",
+    "title": "Cross & Connect",
+    "waitlistTitle": "Join the Waitlist"
+  },
+  "notFound": {
+    "backToHome": "Back to Home",
+    "description": "Sorry, we couldn't find the page you're looking for.",
+    "title": "Page Not Found"
+  },
+  "waitlist": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "johnsmith@example.com",
+    "errorGeneric": "Something went wrong",
+    "errorMessage": "Failed to join waitlist. Please try again.",
+    "nameLabel": "Name",
+    "namePlaceholder": "John Doe",
+    "submitButton": "Get on the waitlist",
+    "submitting": "Joining...",
+    "successMessage": "Successfully joined the waitlist!"
+  }
+}

@@ -19,6 +19,7 @@ Next.js 15 application for managing a waitlist with trackable URLs, admin dashbo
 - Trackable URL campaigns with click analytics
 - Member management dashboard
 - Responsive UI with dark mode support
+- Full internationalization (English/Dutch) with automatic translation extraction
 
 ## Project Structure
 ```
@@ -83,6 +84,15 @@ npm run prisma:generate        # Generate Prisma client
 - Default admin: `admin@crossconnect.com` / `C&C_Admin2024!`
 - Protected routes use NextAuth middleware
 - Session-based authentication with JWT
+
+## Internationalization
+- i18next with automatic translation extraction (`npm run i18n:extract`)
+- Supported languages: English (en), Dutch (nl)
+- Translation files: `locales/[locale]/common.json`
+- Server components: `getTranslation()` from `@/i18n`
+- Client components: `useTranslation(lng, 'common')` from `@/i18n/client`
+- Locale routing: `/[locale]/...` with middleware-based detection
+- All public and backoffice pages fully translated
 
 ## Testing
 - 58 unit tests covering components, API routes, and utilities
