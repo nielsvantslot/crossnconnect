@@ -1,13 +1,24 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslation } from '@/i18n/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-export function WaitlistForm({ lng }: { lng: string }) {
-  const { t } = useTranslation(lng, 'common');
+interface WaitlistFormProps {
+  translations: {
+    nameLabel: string;
+    namePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    joinButton: string;
+    successMessage: string;
+    errorMessage: string;
+    errorGeneric: string;
+  };
+}
+
+export function WaitlistForm({ translations: t }: WaitlistFormProps) {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,14 +41,14 @@ export function WaitlistForm({ lng }: { lng: string }) {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage({ type: 'success', text: t('waitlist.successMessage') });
+        setMessage({ type: 'success', text: t.successMessage });
         setEmail('');
         setName('');
       } else {
-        setMessage({ type: 'error', text: data.error || t('waitlist.errorGeneric') });
+        setMessage({ type: 'error', text: data.error || t.errorGeneric });
       }
     } catch {
-      setMessage({ type: 'error', text: t('waitlist.errorMessage') });
+      setMessage({ type: 'error', text: t.errorMessage });
     } finally {
       setIsLoading(false);
     }
@@ -48,55 +59,50 @@ export function WaitlistForm({ lng }: { lng: string }) {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
           <Label htmlFor="name" className="text-sm font-normal text-slate-600 dark:text-slate-400">
-            {t('waitlist.nameLabel')}
+            {t.nameLabel}
           </Label>
           <Input
             id="name"
             type="text"
-            placeholder={t('waitlist.namePlaceholder')}
+            placeholder={t.namePlaceholder}
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            disabled={isLoading}
-            className="h-12 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-md text-base"
+            className="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700"
           />
         </div>
-        
         <div className="space-y-2">
           <Label htmlFor="email" className="text-sm font-normal text-slate-600 dark:text-slate-400">
-            {t('waitlist.emailLabel')}
+            {t.emailLabel}
           </Label>
           <Input
             id="email"
             type="email"
-            placeholder={t('waitlist.emailPlaceholder')}
+            placeholder={t.emailPlaceholder}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            disabled={isLoading}
-            className="h-12 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-md text-base"
+            className="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700"
           />
         </div>
-
+        <Button 
+          type="submit" 
+          className="w-full bg-white text-purple-700 hover:bg-slate-100 font-semibold"
+          disabled={isLoading}
+        >
+          {isLoading ? '...' : t.joinButton}
+        </Button>
         {message && (
           <div
-            className={`p-4 rounded-md text-sm ${
+            className={`p-3 rounded-md text-sm ${
               message.type === 'success'
-                ? 'bg-green-50 text-green-700 border border-green-200 dark:bg-green-950/50 dark:text-green-400 dark:border-green-900'
-                : 'bg-red-50 text-red-700 border border-red-200 dark:bg-red-950/50 dark:text-red-400 dark:border-red-900'
+                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100'
+                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'
             }`}
           >
             {message.text}
           </div>
         )}
-
-        <Button 
-          type="submit" 
-          className="w-full h-12 text-white text-base font-semibold rounded-md shadow-none" 
-          disabled={isLoading}
-        >
-          {isLoading ? t('waitlist.submitting') : t('waitlist.submitButton')}
-        </Button>
       </form>
     </div>
   );

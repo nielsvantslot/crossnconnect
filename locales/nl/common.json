@@ -1,4 +1,7 @@
 {
+  "common": {
+    "notAvailable": "N.v.t."
+  },
   "backoffice": {
     "dashboard": {
       "acceptanceRateLabel": "acceptatiepercentage",
@@ -40,23 +43,42 @@
       "title": "Backoffice Inloggen"
     },
     "members": {
-      "clubMembers": "Club Leden",
+      "clubMembers": "Clubleden",
       "description": "Alle geaccepteerde leden van Cross & Connect Club",
       "noMembers": "Nog geen leden",
+      "noMembersYet": "Nog geen leden",
       "table": {
         "email": "E-mail",
-        "joined": "Lid Geworden",
+        "joined": "Toegetreden",
+        "joinedDate": "Datum Toegetreden",
         "name": "Naam",
-        "signedUp": "Ingeschreven"
+        "signedUp": "Aangemeld"
       },
       "thisWeek": "Deze Week",
       "title": "Leden",
       "today": "Vandaag",
       "totalMembers": "Totaal Leden"
     },
+    "denied": {
+      "actions": "Acties",
+      "deniedOn": "Afgewezen Op",
+      "description": "Bekijk afgewezen aanvragen - kunnen teruggezet worden naar in behandeling",
+      "email": "E-mail",
+      "entriesDescription": "Aanvragen die zijn afgewezen - kunnen teruggezet worden naar in behandeling",
+      "entriesTitle": "Afgewezen Aanvragen",
+      "name": "Naam",
+      "noDeniedEntries": "Geen afgewezen aanvragen",
+      "revertToPending": "Terugzetten naar In Behandeling",
+      "signedUp": "Aangemeld",
+      "title": "Afgewezen Aanvragen",
+      "totalDenied": "Totaal Afgewezen"
+    },
     "sidebar": {
       "dashboard": "Dashboard",
+      "denied": "Afgewezen",
+      "marketing": "Marketing",
       "members": "Leden",
+      "membership": "Lidmaatschap",
       "signOut": "Uitloggen",
       "trackableUrls": "Traceerbare URLs",
       "waitlist": "Wachtlijst"
@@ -68,16 +90,24 @@
       "confirmDelete": "Weet je zeker dat je deze traceerbare URL wilt verwijderen?",
       "copied": "Gekopieerd",
       "copy": "Kopiëren",
+      "create": "Link Aanmaken",
       "createLink": "Link Aanmaken",
       "createNew": "Nieuwe Traceerbare URL Aanmaken",
+      "delete": "Verwijderen",
       "description": "Creëer en beheer traceerbare aanmeldingslinks",
+      "existingUrls": "Jouw Traceerbare Links",
       "generateDescription": "Genereer een unieke link om aanmeldingen van verschillende bronnen te volgen",
+      "manageDescription": "Al jouw traceerbare URLs en hun prestaties",
+      "nameLabel": "Campagne Naam",
+      "namePlaceholder": "bijv., Twitter Campagne, E-mail Nieuwsbrief",
       "never": "Nooit",
       "noUrls": "Nog geen traceerbare URLs. Maak er één hierboven!",
+      "noUrlsYet": "Nog geen traceerbare URLs. Maak er één hierboven!",
       "table": {
         "actions": "Acties",
         "lastClicked": "Laatst Geklikt",
         "name": "Naam",
+        "slug": "Slug",
         "totalClicks": "Totaal Klikken",
         "uniqueClicks": "Unieke Klikken",
         "url": "URL"
@@ -120,6 +150,7 @@
     "emailPlaceholder": "janjansen@voorbeeld.nl",
     "errorGeneric": "Er is iets misgegaan",
     "errorMessage": "Inschrijven mislukt. Probeer het opnieuw.",
+    "joinButton": "Schrijf je in",
     "nameLabel": "Naam",
     "namePlaceholder": "Jan Jansen",
     "submitButton": "Schrijf je in",

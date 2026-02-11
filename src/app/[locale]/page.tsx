@@ -1,4 +1,4 @@
-import { WaitlistForm } from '@/components/waitlist-form';
+import { WaitlistForm } from '@/components/waitlist-form-client';
 import { getTranslation } from '@/i18n';
 
 export default async function Home({
@@ -35,7 +35,18 @@ export default async function Home({
               {t('home.waitlistTitle')}
             </h2>
           </div>
-          <WaitlistForm lng={locale} />
+          <WaitlistForm 
+            translations={{
+              nameLabel: t('waitlist.nameLabel'),
+              namePlaceholder: t('waitlist.namePlaceholder'),
+              emailLabel: t('waitlist.emailLabel'),
+              emailPlaceholder: t('waitlist.emailPlaceholder'),
+              joinButton: t('waitlist.joinButton'),
+              successMessage: t('waitlist.successMessage'),
+              errorMessage: t('waitlist.errorMessage'),
+              errorGeneric: t('waitlist.errorGeneric'),
+            }}
+          />
         </div>
       </div>
     </div>

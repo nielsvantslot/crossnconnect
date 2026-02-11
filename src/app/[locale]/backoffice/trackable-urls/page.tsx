@@ -1,5 +1,8 @@
 import prisma from '@/lib/prisma';
-import { TrackableUrlsClient } from './trackable-urls-client';
+import { getTranslation } from '@/i18n';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { CreateUrlForm } from './create-url-form';
+import { UrlActions } from './url-actions';
 
 // Force dynamic rendering - this page requires database access
 export const dynamic = 'force-dynamic';
@@ -10,6 +13,8 @@ export default async function TrackableUrlsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const { t } = await getTranslation(locale, 'common');
+
   const urls = await prisma.trackableUrl.findMany({
     orderBy: { createdAt: 'desc' },
     include: {
@@ -36,5 +41,105 @@ export default async function TrackableUrlsPage({
       : null,
   }));
 
-  return <TrackableUrlsClient lng={locale} urls={urlsWithStats} />;
+  return (
+    <div className="container mx-auto p-6 max-w-6xl">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold">{t('backoffice.trackableUrls.title')}</h1>
+        <p className="text-muted-foreground mt-1">
+          {t('backoffice.trackableUrls.description')}
+        </p>
+      </div>
+
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>{t('backoffice.trackableUrls.createNew')}</CardTitle>
+          <CardDescription>
+            {t('backoffice.trackableUrls.generateDescription')}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <CreateUrlForm
+            nameLabel={t('backoffice.trackableUrls.nameLabel')}
+            namePlaceholder={t('backoffice.trackableUrls.namePlaceholder')}
+            createButtonLabel={t('backoffice.trackableUrls.create')}
+          />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('backoffice.trackableUrls.existingUrls')}</CardTitle>
+          <CardDescription>
+            {t('backoffice.trackableUrls.manageDescription')}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="relative overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs uppercase bg-muted">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    {t('backoffice.trackableUrls.table.name')}
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    {t('backoffice.trackableUrls.table.slug')}
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    {t('backoffice.trackableUrls.table.totalClicks')}
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    {t('backoffice.trackableUrls.table.uniqueClicks')}
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    {t('backoffice.trackableUrls.table.lastClicked')}
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    {t('backoffice.trackableUrls.table.actions')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {urlsWithStats.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-4 text-center text-muted-foreground">
+                      {t('backoffice.trackableUrls.noUrlsYet')}
+                    </td>
+           </tr>
+                ) : (
+                  urlsWithStats.map((url) => (
+                    <tr key={url.id} className="border-b hover:bg-muted/50">
+                      <td className="px-6 py-4 font-medium">{url.name}</td>
+                      <td className="px-6 py-4 text-xs font-mono text-muted-foreground">
+                        /trk/{url.slug}
+                      </td>
+                      <td className="px-6 py-4">{url.totalClicks}</td>
+                      <td className="px-6 py-4">{url.uniqueClicks}</td>
+                      <td className="px-6 py-4">
+                        {url.lastClickedAt
+                          ? new Date(url.lastClickedAt).toLocaleDateString(locale, {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                            })
+                          : t('backoffice.trackableUrls.never')}
+                      </td>
+                      <td className="px-6 py-4">
+                        <UrlActions
+                          urlId={url.id}
+                          slug={url.slug}
+                          copyLabel={t('backoffice.trackableUrls.copy')}
+                          deleteLabel={t('backoffice.trackableUrls.delete')}
+                          deleteConfirm={t('backoffice.trackableUrls.confirmDelete')}
+                        />
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }

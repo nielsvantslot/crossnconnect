@@ -1,4 +1,7 @@
 {
+  "common": {
+    "notAvailable": "N/A"
+  },
   "backoffice": {
     "dashboard": {
       "acceptanceRateLabel": "acceptance rate",
@@ -43,9 +46,11 @@
       "clubMembers": "Club Members",
       "description": "All accepted members of Cross & Connect Club",
       "noMembers": "No members yet",
+      "noMembersYet": "No members yet",
       "table": {
         "email": "Email",
         "joined": "Joined",
+        "joinedDate": "Joined Date",
         "name": "Name",
         "signedUp": "Signed Up"
       },
@@ -54,9 +59,26 @@
       "today": "Today",
       "totalMembers": "Total Members"
     },
+    "denied": {
+      "actions": "Actions",
+      "deniedOn": "Denied On",
+      "description": "Review denied applications - can be reverted to pending",
+      "email": "Email",
+      "entriesDescription": "Applications that were denied - can be reverted to pending",
+      "entriesTitle": "Denied Entries",
+      "name": "Name",
+      "noDeniedEntries": "No denied entries",
+      "revertToPending": "Revert to Pending",
+      "signedUp": "Signed Up",
+      "title": "Denied Applications",
+      "totalDenied": "Total Denied"
+    },
     "sidebar": {
       "dashboard": "Dashboard",
+      "denied": "Denied",
+      "marketing": "Marketing",
       "members": "Members",
+      "membership": "Membership",
       "signOut": "Sign Out",
       "trackableUrls": "Trackable URLs",
       "waitlist": "Waitlist"
@@ -68,16 +90,24 @@
       "confirmDelete": "Are you sure you want to delete this trackable URL?",
       "copied": "Copied",
       "copy": "Copy",
+      "create": "Create Link",
       "createLink": "Create Link",
       "createNew": "Create New Trackable URL",
+      "delete": "Delete",
       "description": "Create and manage trackable signup links",
+      "existingUrls": "Your Trackable Links",
       "generateDescription": "Generate a unique link to track signups from different sources",
+      "manageDescription": "All your trackable URLs and their performance",
+      "nameLabel": "Campaign Name",
+      "namePlaceholder": "e.g., Twitter Campaign, Email Newsletter",
       "never": "Never",
       "noUrls": "No trackable URLs yet. Create one above!",
+      "noUrlsYet": "No trackable URLs yet. Create one above!",
       "table": {
         "actions": "Actions",
         "lastClicked": "Last Clicked",
         "name": "Name",
+        "slug": "Slug",
         "totalClicks": "Total Clicks",
         "uniqueClicks": "Unique Clicks",
         "url": "URL"
@@ -120,6 +150,7 @@
     "emailPlaceholder": "johnsmith@example.com",
     "errorGeneric": "Something went wrong",
     "errorMessage": "Failed to join waitlist. Please try again.",
+    "joinButton": "Get on the waitlist",
     "nameLabel": "Name",
     "namePlaceholder": "John Doe",
     "submitButton": "Get on the waitlist",

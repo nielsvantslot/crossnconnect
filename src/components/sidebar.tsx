@@ -3,8 +3,7 @@
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname, useParams } from 'next/navigation';
-import { useTranslation } from '@/i18n/client';
-import { Users, Clock, LogOut, User, LayoutDashboard, Link2 } from 'lucide-react';
+import { Users, Clock, LogOut, User, LayoutDashboard, Link2, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface SidebarProps {
@@ -12,17 +11,26 @@ interface SidebarProps {
     name?: string | null;
     email?: string | null;
   };
+  translations: {
+    dashboard: string;
+    membership: string;
+    waitlist: string;
+    members: string;
+    denied: string;
+    marketing: string;
+    trackableUrls: string;
+    signOut: string;
+  };
 }
 
-export function Sidebar({ user }: SidebarProps) {
+export function Sidebar({ user, translations: t }: SidebarProps) {
   const pathname = usePathname();
   const params = useParams();
   const locale = params.locale as string;
-  const { t } = useTranslation(locale, 'common');
 
   const dashboardItem = {
     href: `/${locale}/backoffice/dashboard`,
-    label: t('backoffice.sidebar.dashboard'),
+    label: t.dashboard,
     icon: LayoutDashboard,
     active: pathname === `/${locale}/backoffice/dashboard` || pathname === `/${locale}/backoffice`,
   };
@@ -30,22 +38,28 @@ export function Sidebar({ user }: SidebarProps) {
   const membershipItems = [
     {
       href: `/${locale}/backoffice/waitlist`,
-      label: t('backoffice.sidebar.waitlist'),
+      label: t.waitlist,
       icon: Clock,
       active: pathname === `/${locale}/backoffice/waitlist`,
     },
     {
       href: `/${locale}/backoffice/members`,
-      label: t('backoffice.sidebar.members'),
+      label: t.members,
       icon: Users,
       active: pathname === `/${locale}/backoffice/members`,
+    },
+    {
+      href: `/${locale}/backoffice/denied`,
+      label: t.denied,
+      icon: XCircle,
+      active: pathname === `/${locale}/backoffice/denied`,
     },
   ];
 
   const marketingItems = [
     {
       href: `/${locale}/backoffice/trackable-urls`,
-      label: t('backoffice.sidebar.trackableUrls'),
+      label: t.trackableUrls,
       icon: Link2,
       active: pathname === `/${locale}/backoffice/trackable-urls`,
     },
@@ -77,7 +91,7 @@ export function Sidebar({ user }: SidebarProps) {
         {/* Membership */}
         <div>
           <h3 className="mb-2 px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Membership
+            {t.membership}
           </h3>
           <div className="space-y-1">
             {membershipItems.map((item) => {
@@ -103,7 +117,7 @@ export function Sidebar({ user }: SidebarProps) {
         {/* Marketing */}
         <div>
           <h3 className="mb-2 px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Marketing
+            {t.marketing}
           </h3>
           <div className="space-y-1">
             {marketingItems.map((item) => {
@@ -141,7 +155,7 @@ export function Sidebar({ user }: SidebarProps) {
           onClick={() => signOut({ callbackUrl: `/${locale}/backoffice` })}
         >
           <LogOut className="h-4 w-4 mr-2" />
-          {t('backoffice.sidebar.signOut')}
+          {t.signOut}
         </Button>
       </div>
     </div>

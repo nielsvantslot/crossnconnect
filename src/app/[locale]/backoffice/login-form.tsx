@@ -3,18 +3,31 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
-import { useTranslation } from '@/i18n/client';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-export function LoginForm() {
+interface LoginFormProps {
+  translations: {
+    title: string;
+    description: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    passwordLabel: string;
+    passwordPlaceholder: string;
+    submitButton: string;
+    signingIn: string;
+    invalidCredentials: string;
+    errorGeneric: string;
+  };
+}
+
+export function LoginForm({ translations: t }: LoginFormProps) {
   const router = useRouter();
   const params = useParams();
   const locale = params.locale as string;
-  const { t } = useTranslation(locale, 'common');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -34,13 +47,13 @@ export function LoginForm() {
       });
 
       if (result?.error) {
-        setError(t('backoffice.login.invalidCredentials'));
+        setError(t.invalidCredentials);
       } else {
         router.push(`/${locale}/backoffice/dashboard`);
         router.refresh();
       }
     } catch {
-      setError(t('backoffice.login.errorGeneric'));
+      setError(t.errorGeneric);
     } finally {
       setIsLoading(false);
     }
@@ -50,19 +63,19 @@ export function LoginForm() {
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">{t('backoffice.login.title')}</CardTitle>
+          <CardTitle className="text-2xl">{t.title}</CardTitle>
           <CardDescription>
-            {t('backoffice.login.description')}
+            {t.description}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">{t('backoffice.login.emailLabel')}</Label>
+              <Label htmlFor="email">{t.emailLabel}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder={t('backoffice.login.emailPlaceholder')}
+                placeholder={t.emailPlaceholder}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -70,12 +83,12 @@ export function LoginForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">{t('backoffice.login.passwordLabel')}</Label>
+              <Label htmlFor="password">{t.passwordLabel}</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder={t('backoffice.login.passwordPlaceholder')}
+                  placeholder={t.passwordPlaceholder}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -105,10 +118,10 @@ export function LoginForm() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t('backoffice.login.signingIn')}
+                  {t.signingIn}
                 </>
               ) : (
-                t('backoffice.login.submitButton')
+                t.submitButton
               )}
             </Button>
           </form>
