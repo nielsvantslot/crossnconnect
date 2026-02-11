@@ -70,6 +70,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null
         }
 
+        // bcrypt.compare is intentionally slow (~300-500ms) for security
+        // This prevents brute force attacks
         const passwordMatch = await bcrypt.compare(
           credentials.password as string,
           admin.password

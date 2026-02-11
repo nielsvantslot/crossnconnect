@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -44,6 +44,18 @@ export function LoginForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      {/* Loading overlay */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-xl flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              Signing you in...
+            </p>
+          </div>
+        </div>
+      )}
+      
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">Backoffice Login</CardTitle>
@@ -93,12 +105,19 @@ export function LoginForm() {
               </div>
             </div>
             {error && (
-              <div className="p-3 rounded-md text-sm bg-red-50 text-red-800 border border-red-200">
+              <div className="p-3 rounded-md text-sm bg-red-50 text-red-800 border border-red-200 dark:bg-red-950/50 dark:text-red-400 dark:border-red-900">
                 {error}
               </div>
             )}
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                'Sign In'
+              )}
             </Button>
           </form>
         </CardContent>
