@@ -66,7 +66,7 @@ export function Sidebar({ user, translations: t }: SidebarProps) {
   ];
 
   return (
-    <div className="flex w-64 flex-col border-r bg-background shadow-lg md:shadow-none" style={{ height: 'calc(var(--vh, 1vh) * 100)' }}>
+    <div className="flex h-dvh w-64 flex-col border-r bg-background shadow-lg md:shadow-none">
       <div className="flex h-16 items-center border-b pl-16 pr-4 md:px-6">
         <h2 className="text-lg md:text-xl font-bold">Cross & Connect</h2>
       </div>
