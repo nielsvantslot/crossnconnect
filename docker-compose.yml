@@ -31,8 +31,6 @@ services:
       AUTH_SECRET: dev-secret-change-in-production
       NEXTAUTH_URL: http://localhost:3000
       NODE_ENV: development
-      AUTH_SECRET: development-secret-key-change-in-production
-      NEXTAUTH_URL: http://localhost:3000
       WATCHPACK_POLLING: "true"
       CHOKIDAR_USEPOLLING: "true"
     volumes:

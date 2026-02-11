@@ -80,7 +80,7 @@ npm run prisma:generate        # Generate Prisma client
 ```
 
 ## Authentication
-- Default admin: `admin@crossconnect.com` / `admin123`
+- Default admin: `admin@crossconnect.com` / `C&C_Admin2024!`
 - Protected routes use NextAuth middleware
 - Session-based authentication with JWT
 

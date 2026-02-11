@@ -44,18 +44,6 @@ export function LoginForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      {/* Loading overlay */}
-      {isLoading && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-xl flex flex-col items-center space-y-4">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
-              Signing you in...
-            </p>
-          </div>
-        </div>
-      )}
-      
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">Backoffice Login</CardTitle>
