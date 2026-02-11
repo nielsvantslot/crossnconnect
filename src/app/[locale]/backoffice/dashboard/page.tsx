@@ -95,17 +95,17 @@ export default async function DashboardPage({
   };
 
   return (
-    <div className="container mx-auto p-6 max-w-7xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">{t('backoffice.dashboard.title')}</h1>
+    <div className="container mx-auto px-4 py-2 sm:p-6 max-w-7xl">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">{t('backoffice.dashboard.title')}</h1>
         <p className="text-muted-foreground mt-1">
           {t('backoffice.dashboard.welcome')}
         </p>
       </div>
 
       {/* Membership Overview */}
-      <div className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">{t('backoffice.dashboard.membershipOverview')}</h2>
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">{t('backoffice.dashboard.membershipOverview')}</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -154,8 +154,8 @@ export default async function DashboardPage({
       </div>
 
       {/* Growth & Marketing */}
-      <div className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">{t('backoffice.dashboard.growthMarketing')}</h2>
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">{t('backoffice.dashboard.growthMarketing')}</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -194,19 +194,19 @@ export default async function DashboardPage({
       </div>
 
       {/* Recent Activity */}
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-4">{t('backoffice.dashboard.recentActivity')}</h2>
+      <div className="mb-3 sm:mb-4">
+        <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">{t('backoffice.dashboard.recentActivity')}</h2>
       </div>
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0">
             <div>
-              <CardTitle>{t('backoffice.dashboard.recentMembers')}</CardTitle>
-              <CardDescription>{t('backoffice.dashboard.latestAcceptedMembers')}</CardDescription>
+              <CardTitle className="text-base sm:text-lg">{t('backoffice.dashboard.recentMembers')}</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">{t('backoffice.dashboard.latestAcceptedMembers')}</CardDescription>
             </div>
             <Link href={`/${locale}/backoffice/members`}>
-              <Button variant="ghost" size="sm">
-                {t('backoffice.dashboard.viewAll')} <ArrowRight className="ml-2 h-4 w-4" />
+              <Button variant="ghost" size="sm" className="text-xs sm:text-sm">
+                {t('backoffice.dashboard.viewAll')} <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
             </Link>
           </CardHeader>
@@ -232,14 +232,14 @@ export default async function DashboardPage({
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0">
             <div>
-              <CardTitle>{t('backoffice.dashboard.pendingApplications')}</CardTitle>
-              <CardDescription>{t('backoffice.dashboard.awaitingYourReview')}</CardDescription>
+              <CardTitle className="text-base sm:text-lg">{t('backoffice.dashboard.pendingApplications')}</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">{t('backoffice.dashboard.awaitingYourReview')}</CardDescription>
             </div>
             <Link href={`/${locale}/backoffice/waitlist`}>
-              <Button variant="ghost" size="sm">
-                {t('backoffice.dashboard.viewAll')} <ArrowRight className="ml-2 h-4 w-4" />
+              <Button variant="ghost" size="sm" className="text-xs sm:text-sm">
+                {t('backoffice.dashboard.viewAll')} <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
             </Link>
           </CardHeader>

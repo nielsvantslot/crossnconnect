@@ -66,17 +66,17 @@ export function Sidebar({ user, translations: t }: SidebarProps) {
   ];
 
   return (
-    <div className="flex h-screen w-64 flex-col border-r bg-background">
-      <div className="flex h-16 items-center border-b px-6">
-        <h2 className="text-xl font-bold">Cross & Connect</h2>
+    <div className="flex h-screen w-64 flex-col border-r bg-background shadow-lg md:shadow-none">
+      <div className="flex h-16 items-center border-b pl-16 pr-4 md:px-6">
+        <h2 className="text-lg md:text-xl font-bold">Cross & Connect</h2>
       </div>
 
-      <nav className="flex-1 space-y-4 p-4">
+      <nav className="flex-1 space-y-4 p-3 md:p-4 overflow-y-auto">
         {/* Dashboard */}
         <div>
           <Link href={dashboardItem.href}>
             <div
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors ${
                 dashboardItem.active
                   ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:bg-muted hover:text-foreground'
@@ -99,7 +99,7 @@ export function Sidebar({ user, translations: t }: SidebarProps) {
               return (
                 <Link key={item.href} href={item.href}>
                   <div
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors ${
                       item.active
                         ? 'bg-primary text-primary-foreground'
                         : 'text-muted-foreground hover:bg-muted hover:text-foreground'
@@ -125,7 +125,7 @@ export function Sidebar({ user, translations: t }: SidebarProps) {
               return (
                 <Link key={item.href} href={item.href}>
                   <div
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors ${
                       item.active
                         ? 'bg-primary text-primary-foreground'
                         : 'text-muted-foreground hover:bg-muted hover:text-foreground'
@@ -141,7 +141,7 @@ export function Sidebar({ user, translations: t }: SidebarProps) {
         </div>
       </nav>
 
-      <div className="border-t p-4">
+      <div className="border-t p-3 md:p-4">
         <div className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 mb-3">
           <User className="h-5 w-5 text-muted-foreground" />
           <div className="flex-1 overflow-hidden">

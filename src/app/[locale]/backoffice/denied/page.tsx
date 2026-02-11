@@ -24,9 +24,9 @@ export default async function DeniedPage({
   });
 
   return (
-    <div className="container mx-auto p-6 max-w-6xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">{t('backoffice.denied.title')}</h1>
+    <div className="container mx-auto px-4 py-2 sm:p-6 max-w-6xl">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">{t('backoffice.denied.title')}</h1>
         <p className="text-muted-foreground mt-1">
           {t('backoffice.denied.description')}
         </p>
@@ -51,23 +51,23 @@ export default async function DeniedPage({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="relative overflow-x-auto">
+          <div className="relative overflow-x-auto -mx-2 sm:mx-0">
             <table className="w-full text-sm text-left">
               <thead className="text-xs uppercase bg-muted">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-3 sm:px-6 py-3">
                     {t('backoffice.denied.name')}
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-3 sm:px-6 py-3">
                     {t('backoffice.denied.email')}
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-3 sm:px-6 py-3 hidden sm:table-cell">
                     {t('backoffice.denied.signedUp')}
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-3 sm:px-6 py-3 hidden md:table-cell">
                     {t('backoffice.denied.deniedOn')}
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-3 sm:px-6 py-3">
                     {t('backoffice.denied.actions')}
                   </th>
                 </tr>
@@ -75,23 +75,23 @@ export default async function DeniedPage({
               <tbody>
                 {deniedEntries.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-4 text-center text-muted-foreground">
+                    <td colSpan={5} className="px-3 sm:px-6 py-4 text-center text-muted-foreground">
                       {t('backoffice.denied.noDeniedEntries')}
                     </td>
                   </tr>
                 ) : (
                   deniedEntries.map((entry) => (
                     <tr key={entry.id} className="border-b hover:bg-muted/50">
-                      <td className="px-6 py-4 font-medium">{entry.name}</td>
-                      <td className="px-6 py-4">{entry.email}</td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 sm:px-6 py-4 font-medium">{entry.name}</td>
+                      <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm">{entry.email}</td>
+                      <td className="px-3 sm:px-6 py-4 hidden sm:table-cell text-xs sm:text-sm">
                         {new Date(entry.createdAt).toLocaleDateString(locale, {
                           year: 'numeric',
                           month: 'short',
                           day: 'numeric',
                         })}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 sm:px-6 py-4 hidden md:table-cell text-xs sm:text-sm">
                         {new Date(entry.updatedAt).toLocaleDateString(locale, {
                           year: 'numeric',
                           month: 'short',
@@ -100,7 +100,7 @@ export default async function DeniedPage({
                           minute: '2-digit',
                         })}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 sm:px-6 py-4">
                         <RevertButton
                           entryId={entry.id}
                           label={t('backoffice.denied.revertToPending')}
