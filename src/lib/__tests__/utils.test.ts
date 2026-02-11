@@ -51,3 +51,59 @@ describe('cn utility function', () => {
     expect(result).toContain('class-3');
   });
 });
+
+describe('detectLocaleFromPathname', () => {
+  // Import the function
+  const { detectLocaleFromPathname } = require('../utils');
+
+  describe('English locale detection', () => {
+    it('detects English from /en prefix', () => {
+      expect(detectLocaleFromPathname('/en')).toBe('en');
+      expect(detectLocaleFromPathname('/en/')).toBe('en');
+      expect(detectLocaleFromPathname('/en/dashboard')).toBe('en');
+      expect(detectLocaleFromPathname('/en/backoffice/members')).toBe('en');
+    });
+  });
+
+  describe('Dutch locale detection', () => {
+    it('detects Dutch from /nl prefix', () => {
+      expect(detectLocaleFromPathname('/nl')).toBe('nl');
+      expect(detectLocaleFromPathname('/nl/')).toBe('nl');
+      expect(detectLocaleFromPathname('/nl/dashboard')).toBe('nl');
+      expect(detectLocaleFromPathname('/nl/backoffice/waitlist')).toBe('nl');
+    });
+  });
+
+  describe('Default behavior', () => {
+    it('defaults to English when pathname has no locale', () => {
+      expect(detectLocaleFromPathname('/')).toBe('en');
+      expect(detectLocaleFromPathname('')).toBe('en');
+      expect(detectLocaleFromPathname('/dashboard')).toBe('en');
+      expect(detectLocaleFromPathname('/backoffice/members')).toBe('en');
+    });
+
+    it('defaults to English for invalid locales', () => {
+      expect(detectLocaleFromPathname('/fr')).toBe('en');
+      expect(detectLocaleFromPathname('/de/dashboard')).toBe('en');
+      expect(detectLocaleFromPathname('/es/about')).toBe('en');
+      expect(detectLocaleFromPathname('/invalid')).toBe('en');
+    });
+  });
+
+  describe('Edge cases', () => {
+    it('handles complex nested paths', () => {
+      expect(detectLocaleFromPathname('/en/backoffice/trackable-urls/123')).toBe('en');
+      expect(detectLocaleFromPathname('/nl/trk/abc123')).toBe('nl');
+    });
+
+    it('handles paths with query strings', () => {
+      expect(detectLocaleFromPathname('/en/dashboard?tab=analytics')).toBe('en');
+      expect(detectLocaleFromPathname('/nl/members?sort=asc')).toBe('nl');
+    });
+
+    it('handles paths with anchors', () => {
+      expect(detectLocaleFromPathname('/en#section')).toBe('en');
+      expect(detectLocaleFromPathname('/nl/about#contact')).toBe('nl');
+    });
+  });
+});

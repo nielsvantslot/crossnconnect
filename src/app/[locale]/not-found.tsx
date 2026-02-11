@@ -1,14 +1,13 @@
 import { headers } from 'next/headers';
 import { getTranslation } from '@/i18n';
 import { NotFoundContent } from '@/components/not-found-content';
+import { detectLocaleFromPathname } from '@/lib/utils';
 
 export default async function NotFound() {
   // Extract locale from the pathname
   const headersList = await headers();
   const pathname = headersList.get('x-pathname') || '';
-  const locale = pathname.split('/')[1] && ['en', 'nl'].includes(pathname.split('/')[1]) 
-    ? pathname.split('/')[1] 
-    : 'en';
+  const locale = detectLocaleFromPathname(pathname);
 
   const { t } = await getTranslation(locale, 'common');
 
