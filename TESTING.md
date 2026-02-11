@@ -97,20 +97,6 @@ npm run test:coverage
 
 Coverage reports are generated in the `coverage/` directory and shown in the terminal.
 
-### Current Test Files
-
-1. **Component Tests**
-   - `src/components/__tests__/waitlist-form.test.tsx` - WaitlistForm component
-   - `src/components/ui/__tests__/button.test.tsx` - Button component
-   - `src/components/ui/__tests__/input.test.tsx` - Input component
-
-2. **API Tests**
-   - `src/app/api/waitlist/__tests__/route.test.ts` - Waitlist API
-   - `src/app/api/trackable-urls/__tests__/route.test.ts` - Trackable URLs API
-
-3. **Utility Tests**
-   - `src/lib/__tests__/utils.test.ts` - Utility functions
-
 ## Best Practices
 
 ### 1. Test Naming
@@ -147,22 +133,7 @@ beforeEach(() => {
 ```
 
 ### 4. Mock External Dependencies
-```typescript
-// Mock Prisma
-jest.mock('@/lib/prisma', () => ({
-  __esModule: true,
-  default: {
-    user: {
-      findMany: jest.fn(),
-    },
-  },
-}));
-
-// Mock Next Auth
-jest.mock('@/lib/auth', () => ({
-  auth: jest.fn(),
-}));
-```
+Mock Prisma, NextAuth, and other external dependencies to isolate unit tests.
 
 ### 5. Test User Interactions
 Use `@testing-library/user-event` for realistic user interactions:
@@ -188,45 +159,14 @@ screen.getByTestId('submit-button')
 ### Run a Single Test File
 ```bash
 npm test -- waitlist-form.test.tsx
-```
-
-### Run Tests Matching a Pattern
-```bash
-npm test -- --testNamePattern="renders correctly"
-```
-
-### Debug in VS Code
-Add this configuration to `.vscode/launch.json`:
+Prefer accessible queries like `getByRole`, `getByLabelText` over `getByTestId`. this configuration to `.vscode/launch.json`:
 ```json
 {
   "type": "node",
   "request": "launch",
   "name": "Jest Debug",
   "program": "${workspaceFolder}/node_modules/.bin/jest",
-  "args": ["--runInBand", "--no-cache"],
-  "console": "integratedTerminal",
-  "internalConsoleOptions": "neverOpen"
-}
-```
-
-## Continuous Integration
-
-Tests should run automatically in your CI/CD pipeline:
-```yaml
-# Example GitHub Actions workflow
-- name: Run tests
-  run: npm test -- --ci --coverage
-```
-
-## Common Matchers
-
-```typescript
-// Equality
-expect(value).toBe(expected);
-expect(value).toEqual(expected);
-
-// Truthiness
-expect(value).toBeTruthy();
+  pect(value).toBeTruthy();
 expect(value).toBeFalsy();
 expect(value).toBeDefined();
 expect(value).toBeNull();

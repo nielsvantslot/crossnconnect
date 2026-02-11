@@ -1,6 +1,11 @@
 # Cross & Connect Waitlist
 
-A Next.js application with Prisma ORM and PostgreSQL database backend.
+A Next.js application with Prisma ORM and PostgreSQL database backend for managing a waitlist and tracking campaign URLs.
+
+## 📚 Documentation
+
+- **[Testing Guide](TESTING.md)** - Unit testing with Jest & React Testing Library
+- **[Deployment Guide](DEPLOYMENT.md)** - Deploy to Vercel or other platforms
 
 ## Features
 
@@ -99,30 +104,26 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - `npm run prisma:push` - Push schema changes to database
 - `npm run prisma:studio` - Open Prisma Studio (database GUI)
 
-## Testing
-
-This project includes comprehensive unit tests using Jest and React Testing Library.
+## Available Scripts
 
 ```bash
-# Run all tests
-npm test
+# Development
+npm run dev              # Start development server
+npm run build            # Build for production
+npm run start            # Start production server
 
-# Run tests in watch mode
-npm run test:watch
+# Database
+npm run prisma:generate  # Generate Prisma Client
+npm run prisma:push      # Push schema to database
+npm run prisma:studio    # Open Prisma Studio GUI
 
-# Run tests with coverage report
-npm run test:coverage
+# Testing
+npm test                 # Run all tests
+npm run test:watch       # Run tests in watch mode
+npm run test:coverage    # Run tests with coverage
 ```
 
-For detailed testing documentation, best practices, and examples, see [TESTING.md](TESTING.md).
-
-### Test Coverage
-
-The test suite includes:
-- ✅ Component tests for UI components (WaitlistForm, Button, Input)
-- ✅ API route tests with mocked database calls
-- ✅ Utility function tests
-- ✅ Comprehensive edge case and error handling tests
+📖 **[View Testing Guide](TESTING.md)** for detailed testing documentation.
 
 ## API Routes
 
@@ -139,60 +140,38 @@ The test suite includes:
 
 ## Docker Commands
 
-If you're using Docker:
-
 ```bash
-# Start all services
-docker-compose up
-
-# Start in detached mode (background)
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop services
-docker-compose down
-
-# Rebuild containers
-docker-compose up --build
-
-# Access PostgreSQL directly
-docker exec -it crossnconnect-db psql -U postgres -d crossnconnect_waitlist
-
-# Run Prisma commands in the container
-docker-compose exec app npm run prisma:studio
-docker-compose exec app npm run prisma:seed
+docker-compose up           # Start all services
+docker-compose up -d        # Start in background
+docker-compose down         # Stop services
+docker-compose down -v      # Stop and remove data
+docker-compose logs -f      # View logs
 ```
 
 ## Project Structure
 
 ```
-crossnconnect-waitlist/
-├── prisma/
-│   └── schema.prisma       # Database schema
-├── src/
-│   ├── app/
-│   │   ├── api/            # API routes
-│   │   ├── layout.tsx      # Root layout
-│   │   ├── page.tsx        # Home page
-│   │   └── globals.css     # Global styles
-│   └── lib/
-│       └── prisma.ts       # Prisma client singleton
-├── .env                    # Environment variables (create this)
-├── .env.example            # Example environment variables
-├── next.config.ts          # Next.js configuration
-├── tailwind.config.ts      # Tailwind CSS configuration
-├── tsconfig.json           # TypeScript configuration
-└── package.json            # Dependencies and scripts
+src/
+├── app/
+│   ├── api/              # API routes (waitlist, trackable URLs, auth)
+│   ├── backoffice/       # Admin dashboard
+│   └── trk/              # URL tracking
+├── components/           # React components
+├── lib/                  # Utilities & configuration
+prisma/
+└── schema.prisma         # Database schema
 ```
 
-## Learn More
+## Resources
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Prisma Documentation](https://www.prisma.io/docs)
-- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+**Documentation:**
+- [Testing Guide](TESTING.md) - Unit testing with Jest
+- [Deployment Guide](DEPLOYMENT.md) - Deploy to Vercel
+
+**External:**
+- [Next.js](https://nextjs.org/docs) - React framework
+- [Prisma](https://www.prisma.io/docs) - Database ORM
+- [Tailwind CSS](https://tailwindcss.com/docs) - Styling
 
 ## License
 
