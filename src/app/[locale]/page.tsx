@@ -42,6 +42,7 @@ export default async function Home({
               emailLabel: t('waitlist.emailLabel'),
               emailPlaceholder: t('waitlist.emailPlaceholder'),
               joinButton: t('waitlist.joinButton'),
+              submitting: t('waitlist.submitting'),
               successMessage: t('waitlist.successMessage'),
               errorMessage: t('waitlist.errorMessage'),
               errorGeneric: t('waitlist.errorGeneric'),

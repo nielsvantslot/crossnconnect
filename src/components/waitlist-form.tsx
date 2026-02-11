@@ -1,25 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-interface WaitlistFormProps {
-  translations: {
-    nameLabel: string;
-    namePlaceholder: string;
-    emailLabel: string;
-    emailPlaceholder: string;
-    joinButton: string;
-    submitting: string;
-    successMessage: string;
-    errorMessage: string;
-    errorGeneric: string;
-  };
-}
-
-export function WaitlistForm({ translations: t }: WaitlistFormProps) {
+export function WaitlistForm({ lng }: { lng: string }) {
+  const { t } = useTranslation(lng, 'common');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -42,30 +30,30 @@ export function WaitlistForm({ translations: t }: WaitlistFormProps) {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage({ type: 'success', text: t.successMessage });
+        setMessage({ type: 'success', text: t('waitlist.successMessage') });
         setEmail('');
         setName('');
       } else {
-        setMessage({ type: 'error', text: data.error || t.errorGeneric });
+        setMessage({ type: 'error', text: data.error || t('waitlist.errorGeneric') });
       }
     } catch {
-      setMessage({ type: 'error', text: t.errorMessage });
+      setMessage({ type: 'error', text: t('waitlist.errorMessage') });
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full max-w-md" suppressHydrationWarning>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
           <Label htmlFor="name" className="text-sm font-normal text-slate-600 dark:text-slate-400">
-            {t.nameLabel}
+            {t('waitlist.nameLabel')}
           </Label>
           <Input
             id="name"
             type="text"
-            placeholder={t.namePlaceholder}
+            placeholder={t('waitlist.namePlaceholder')}
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -73,15 +61,15 @@ export function WaitlistForm({ translations: t }: WaitlistFormProps) {
             className="h-12 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-md text-base"
           />
         </div>
-
+        
         <div className="space-y-2">
           <Label htmlFor="email" className="text-sm font-normal text-slate-600 dark:text-slate-400">
-            {t.emailLabel}
+            {t('waitlist.emailLabel')}
           </Label>
           <Input
             id="email"
             type="email"
-            placeholder={t.emailPlaceholder}
+            placeholder={t('waitlist.emailPlaceholder')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -102,12 +90,12 @@ export function WaitlistForm({ translations: t }: WaitlistFormProps) {
           </div>
         )}
 
-        <Button
-          type="submit"
-          className="w-full h-12 text-white text-base font-semibold rounded-md shadow-none"
+        <Button 
+          type="submit" 
+          className="w-full h-12 text-white text-base font-semibold rounded-md shadow-none" 
           disabled={isLoading}
         >
-          {isLoading ? t.submitting : t.joinButton}
+          {isLoading ? t('waitlist.submitting') : t('waitlist.submitButton')}
         </Button>
       </form>
     </div>

@@ -1,9 +1,22 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { WaitlistForm } from '../waitlist-form';
+import { WaitlistForm } from '../waitlist-form-client';
 
 // Mock fetch
 global.fetch = jest.fn();
+
+// Mock translations
+const mockTranslations = {
+  nameLabel: 'Name',
+  namePlaceholder: 'John Doe',
+  emailLabel: 'Email',
+  emailPlaceholder: 'johnsmith@example.com',
+  joinButton: 'Get on the waitlist',
+  submitting: 'Joining...',
+  successMessage: 'Successfully joined the waitlist!',
+  errorMessage: 'Failed to join waitlist. Please try again.',
+  errorGeneric: 'Something went wrong',
+};
 
 describe('WaitlistForm', () => {
   beforeEach(() => {
@@ -11,7 +24,7 @@ describe('WaitlistForm', () => {
   });
 
   it('renders the form with name and email inputs', () => {
-    render(<WaitlistForm lng="en" />);
+    render(<WaitlistForm translations={mockTranslations} />);
     
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
@@ -19,7 +32,7 @@ describe('WaitlistForm', () => {
   });
 
   it('displays validation error when form is submitted empty', async () => {
-    render(<WaitlistForm lng="en" />);
+    render(<WaitlistForm translations={mockTranslations} />);
     const user = userEvent.setup();
     
     const submitButton = screen.getByRole('button', { name: /get on the waitlist/i });
@@ -35,7 +48,7 @@ describe('WaitlistForm', () => {
       json: async () => ({ message: 'Successfully joined the waitlist!' }),
     });
 
-    render(<WaitlistForm lng="en" />);
+    render(<WaitlistForm translations={mockTranslations} />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i);
@@ -65,7 +78,7 @@ describe('WaitlistForm', () => {
       json: async () => ({ error: 'Email already exists' }),
     });
 
-    render(<WaitlistForm lng="en" />);
+    render(<WaitlistForm translations={mockTranslations} />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i);
@@ -82,7 +95,7 @@ describe('WaitlistForm', () => {
   it('displays generic error message on network failure', async () => {
     (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
 
-    render(<WaitlistForm lng="en" />);
+    render(<WaitlistForm translations={mockTranslations} />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i);
@@ -104,7 +117,7 @@ describe('WaitlistForm', () => {
       }), 100))
     );
 
-    render(<WaitlistForm lng="en" />);
+    render(<WaitlistForm translations={mockTranslations} />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i);
@@ -129,7 +142,7 @@ describe('WaitlistForm', () => {
       json: async () => ({ message: 'Successfully joined the waitlist!' }),
     });
 
-    render(<WaitlistForm lng="en" />);
+    render(<WaitlistForm translations={mockTranslations} />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i) as HTMLInputElement;
@@ -154,7 +167,7 @@ describe('WaitlistForm', () => {
       }), 100))
     );
 
-    render(<WaitlistForm lng="en" />);
+    render(<WaitlistForm translations={mockTranslations} />);
     const user = userEvent.setup();
     
     const nameInput = screen.getByLabelText(/name/i);
