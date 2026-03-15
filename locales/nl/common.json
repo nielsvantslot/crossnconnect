@@ -251,6 +251,15 @@
   "nav": {
     "ourStory": "Ons Verhaal"
   },
+  "footer": {
+    "tagline": "De community voor ambitieuze talenten in sport, business en pleasure.",
+    "contactTitle": "Contact",
+    "email": "info@crossandconnect.nl",
+    "locationTitle": "Locatie",
+    "location": "Boekelo, Nederland",
+    "privacy": "Privacyverklaring",
+    "rights": "Alle rechten voorbehouden."
+  },
   "ourStory": {
     "pageTitle": "Corporate Story – Cross & Connect",
     "heroTitle": "Nieuwe generatie. Nieuwe energie. Nieuwe manier van verbinden.",

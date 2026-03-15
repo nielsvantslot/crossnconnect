@@ -1,5 +1,6 @@
 import { WaitlistForm } from '@/components/waitlist-form-client';
 import { Navigation } from '@/components/navigation';
+import { Footer } from '@/components/footer';
 import { getTranslation } from '@/i18n';
 
 export default async function Home({
@@ -116,6 +117,14 @@ export default async function Home({
         </div>
       </div>
       </div>
+
+      {/* Footer */}
+      <Footer translations={{
+        tagline: t('footer.tagline'),
+        contactTitle: t('footer.contactTitle'),
+        email: t('footer.email'),
+        rights: t('footer.rights'),
+      }} />
     </div>
   );
 }
