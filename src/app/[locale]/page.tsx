@@ -1,4 +1,5 @@
 import { WaitlistForm } from '@/components/waitlist-form-client';
+import { Navigation } from '@/components/navigation';
 import { getTranslation } from '@/i18n';
 
 export default async function Home({
@@ -10,7 +11,12 @@ export default async function Home({
   const { t } = await getTranslation(locale, 'common');
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col">
+      {/* Navigation Bar */}
+      <Navigation locale={locale} />
+      
+      {/* Main Content - Split Screen (floats beneath nav) */}
+      <div className="flex-1 flex flex-col md:flex-row">
       {/* Left Side - Hero */}
       <div className="w-full md:w-1/2 bg-gradient-to-br from-brand-dark-green via-brand-green to-brand-light-green p-8 md:p-16 lg:p-20 flex flex-col justify-between text-white min-h-[40vh] md:min-h-screen">
         <div className="flex-1 flex flex-col justify-center gap-24">
@@ -106,6 +112,7 @@ export default async function Home({
             locale={locale}
           />
         </div>
+      </div>
       </div>
     </div>
   );
