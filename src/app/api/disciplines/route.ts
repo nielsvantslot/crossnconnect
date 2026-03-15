@@ -1,0 +1,27 @@
+import { NextRequest, NextResponse } from 'next/server';
+import prisma from '@/lib/prisma';
+
+/**
+ * GET /api/disciplines
+ * Returns all available disciplines ordered by display order
+ */
+export async function GET(_request: NextRequest) {
+  try {
+    const disciplines = await prisma.discipline.findMany({
+      orderBy: { order: 'asc' },
+      select: {
+        id: true,
+        name: true,
+        nameEn: true,
+      },
+    });
+
+    return NextResponse.json(disciplines);
+  } catch (error) {
+    console.error('Failed to fetch disciplines:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch disciplines' },
+      { status: 500 }
+    );
+  }
+}

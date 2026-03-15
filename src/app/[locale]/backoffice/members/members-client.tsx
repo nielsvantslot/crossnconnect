@@ -6,7 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 interface Member {
   id: string;
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  occupation: string;
+  horseExperience: string;
   createdAt: Date;
   acceptedAt: Date | null;
 }
@@ -89,8 +93,11 @@ export function MembersClient({ lng, members }: MembersClientProps) {
                     <th scope="col" className="px-6 py-3">
                       {t('backoffice.members.table.email')}
                     </th>
-                    <th scope="col" className="px-6 py-3">
-                      {t('backoffice.members.table.joined')}
+                    <th scope="col" className="px-4 py-3">
+                      City
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Occupation
                     </th>
                     <th scope="col" className="px-6 py-3">
                       {t('backoffice.members.table.signedUp')}
@@ -100,24 +107,17 @@ export function MembersClient({ lng, members }: MembersClientProps) {
                 <tbody>
                   {members.length === 0 ? (
                     <tr>
-                      <td colSpan={4} className="px-6 py-4 text-center text-muted-foreground">
+                      <td colSpan={5} className="px-6 py-4 text-center text-muted-foreground">
                         {t('backoffice.members.noMembers')}
                       </td>
                     </tr>
                   ) : (
                     members.map((member) => (
                       <tr key={member.id} className="border-b hover:bg-muted/50">
-                        <td className="px-6 py-4 font-medium">{member.name}</td>
+                        <td className="px-6 py-4 font-medium">{`${member.firstName} ${member.lastName}`}</td>
                         <td className="px-6 py-4">{member.email}</td>
-                        <td className="px-6 py-4">
-                          {member.acceptedAt ? new Date(member.acceptedAt).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          }) : 'N/A'}
-                        </td>
+                        <td className="px-4 py-4">{member.city}</td>
+                        <td className="px-4 py-4 text-sm">{member.occupation}</td>
                         <td className="px-6 py-4 text-muted-foreground">
                           {new Date(member.createdAt).toLocaleDateString('en-US', {
                             year: 'numeric',

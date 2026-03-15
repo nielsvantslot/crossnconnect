@@ -28,9 +28,9 @@ export default async function DashboardPage({
   ]);
 
   const [pendingCount, acceptedCount, deniedCount, recentClicksCount, previousWeekClicksCount] = await Promise.all([
-    prisma.member.count({ where: { status: 'PENDING' } }),
-    prisma.member.count({ where: { status: 'ACCEPTED' } }),
-    prisma.member.count({ where: { status: 'DENIED' } }),
+    prisma.member.count({ where: { status: 'PENDING', deletedAt: null } }),
+    prisma.member.count({ where: { status: 'ACCEPTED', deletedAt: null } }),
+    prisma.member.count({ where: { status: 'DENIED', deletedAt: null } }),
     prisma.click.count({
       where: { clickedAt: { gte: sevenDaysAgo } },
     }),
@@ -66,14 +66,18 @@ export default async function DashboardPage({
   const recentMembers = await prisma.member.findMany({
     where: { 
       status: 'ACCEPTED',
-      acceptedAt: { not: null }
+      acceptedAt: { not: null },
+      deletedAt: null,
     },
     orderBy: { acceptedAt: 'desc' },
     take: 5,
   });
 
   const recentPending = await prisma.member.findMany({
-    where: { status: 'PENDING' },
+    where: { 
+      status: 'PENDING',
+      deletedAt: null,
+    },
     orderBy: { createdAt: 'desc' },
     take: 5,
   });
@@ -216,15 +220,19 @@ export default async function DashboardPage({
             ) : (
               <div className="space-y-3">
                 {recentMembers.map((member) => (
-                  <div key={member.id} className="flex items-center justify-between border-b pb-2 last:border-0">
+                  <Link 
+                    key={member.id} 
+                    href={`/${locale}/backoffice/waitlist/${member.id}`}
+                    className="flex items-center justify-between border-b pb-2 last:border-0 hover:bg-muted/50 -mx-2 px-2 py-1 rounded transition-colors cursor-pointer"
+                  >
                     <div>
-                      <p className="font-medium text-sm">{member.name}</p>
+                      <p className="font-medium text-sm">{member.firstName} {member.lastName}</p>
                       <p className="text-xs text-muted-foreground">{member.email}</p>
                     </div>
                     <p className="text-xs text-muted-foreground">
                       {member.acceptedAt ? new Date(member.acceptedAt).toLocaleDateString(locale) : 'N/A'}
                     </p>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}
@@ -249,15 +257,19 @@ export default async function DashboardPage({
             ) : (
               <div className="space-y-3">
                 {recentPending.map((member) => (
-                  <div key={member.id} className="flex items-center justify-between border-b pb-2 last:border-0">
+                  <Link 
+                    key={member.id} 
+                    href={`/${locale}/backoffice/waitlist/${member.id}`}
+                    className="flex items-center justify-between border-b pb-2 last:border-0 hover:bg-muted/50 -mx-2 px-2 py-1 rounded transition-colors cursor-pointer"
+                  >
                     <div>
-                      <p className="font-medium text-sm">{member.name}</p>
+                      <p className="font-medium text-sm">{member.firstName} {member.lastName}</p>
                       <p className="text-xs text-muted-foreground">{member.email}</p>
                     </div>
                     <p className="text-xs text-muted-foreground">
                       {new Date(member.createdAt).toLocaleDateString(locale)}
                     </p>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}

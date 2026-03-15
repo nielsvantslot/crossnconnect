@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma';
 import { getTranslation } from '@/i18n';
+import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { RevertButton } from './revert-button';
 
@@ -17,6 +18,7 @@ export default async function DeniedPage({
   const deniedEntries = await prisma.member.findMany({
     where: {
       status: 'DENIED',
+      deletedAt: null,  // Only non-deleted members
     },
     orderBy: {
       updatedAt: 'desc',
@@ -82,23 +84,47 @@ export default async function DeniedPage({
                 ) : (
                   deniedEntries.map((entry) => (
                     <tr key={entry.id} className="border-b hover:bg-muted/50">
-                      <td className="px-3 sm:px-6 py-4 font-medium">{entry.name}</td>
-                      <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm">{entry.email}</td>
+                      <td className="px-3 sm:px-6 py-4 font-medium">
+                        <Link 
+                          href={`/${locale}/backoffice/waitlist/${entry.id}`}
+                          className="block w-full cursor-pointer"
+                        >
+                          {entry.firstName} {entry.lastName}
+                        </Link>
+                      </td>
+                      <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm">
+                        <Link 
+                          href={`/${locale}/backoffice/waitlist/${entry.id}`}
+                          className="block w-full cursor-pointer"
+                        >
+                          {entry.email}
+                        </Link>
+                      </td>
                       <td className="px-3 sm:px-6 py-4 hidden sm:table-cell text-xs sm:text-sm">
-                        {new Date(entry.createdAt).toLocaleDateString(locale, {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                        })}
+                        <Link 
+                          href={`/${locale}/backoffice/waitlist/${entry.id}`}
+                          className="block w-full cursor-pointer"
+                        >
+                          {new Date(entry.createdAt).toLocaleDateString(locale, {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </Link>
                       </td>
                       <td className="px-3 sm:px-6 py-4 hidden md:table-cell text-xs sm:text-sm">
-                        {new Date(entry.updatedAt).toLocaleDateString(locale, {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
+                        <Link 
+                          href={`/${locale}/backoffice/waitlist/${entry.id}`}
+                          className="block w-full cursor-pointer"
+                        >
+                          {new Date(entry.updatedAt).toLocaleDateString(locale, {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </Link>
                       </td>
                       <td className="px-3 sm:px-6 py-4">
                         <RevertButton

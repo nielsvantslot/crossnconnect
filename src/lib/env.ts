@@ -12,4 +12,5 @@ export const env = {
   NEXTAUTH_SECRET: getEnvVar('AUTH_SECRET'),
   NEXTAUTH_URL: process.env.NEXTAUTH_URL || 'http://localhost:3000',
   NODE_ENV: process.env.NODE_ENV || 'development',
+  ENCRYPTION_KEY: getEnvVar('ENCRYPTION_KEY'),
 } as const;

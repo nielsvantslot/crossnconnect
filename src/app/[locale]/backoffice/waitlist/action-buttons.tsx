@@ -9,9 +9,10 @@ interface ActionButtonsProps {
   entryId: string;
   acceptLabel: string;
   denyLabel: string;
+  nextMemberUrl?: string;  // URL to next pending member or back to list
 }
 
-export function ActionButtons({ entryId, acceptLabel, denyLabel }: ActionButtonsProps) {
+export function ActionButtons({ entryId, acceptLabel, denyLabel, nextMemberUrl }: ActionButtonsProps) {
   const router = useRouter();
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -25,7 +26,12 @@ export function ActionButtons({ entryId, acceptLabel, denyLabel }: ActionButtons
       });
 
       if (response.ok) {
-        router.refresh();
+        // Redirect to next member or back to list
+        if (nextMemberUrl) {
+          router.push(nextMemberUrl);
+        } else {
+          router.refresh();
+        }
       }
     } catch (error) {
       console.error('Failed to update status:', error);

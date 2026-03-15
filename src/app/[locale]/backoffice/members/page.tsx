@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma';
 import { getTranslation } from '@/i18n';
+import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 // Force dynamic rendering - this  page requires database access
@@ -16,6 +17,7 @@ export default async function MembersPage({
   const members = await prisma.member.findMany({
     where: {
       status: 'ACCEPTED',
+      deletedAt: null,  // Only non-deleted members
     },
     orderBy: {
       acceptedAt: 'desc',
@@ -103,17 +105,36 @@ export default async function MembersPage({
                   </tr>
                 ) : (
                   members.map((member) => (
-                    <tr key={member.id} className="border-b hover:bg-muted/50">
-                      <td className="px-3 sm:px-6 py-4 font-medium">{member.name}</td>
-                      <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm">{member.email}</td>
+                    <tr key={member.id} className="border-b hover:bg-muted/50 cursor-pointer transition-colors">
+                      <td className="px-3 sm:px-6 py-4 font-medium">
+                        <Link 
+                          href={`/${locale}/backoffice/waitlist/${member.id}`}
+                          className="block w-full"
+                        >
+                          {member.firstName} {member.lastName}
+                        </Link>
+                      </td>
+                      <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm">
+                        <Link 
+                          href={`/${locale}/backoffice/waitlist/${member.id}`}
+                          className="block w-full"
+                        >
+                          {member.email}
+                        </Link>
+                      </td>
                       <td className="px-3 sm:px-6 py-4 hidden md:table-cell text-xs sm:text-sm">
-                        {member.acceptedAt
-                          ? new Date(member.acceptedAt).toLocaleDateString(locale, {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                            })
-                          : t('common.notAvailable')}
+                        <Link 
+                          href={`/${locale}/backoffice/waitlist/${member.id}`}
+                          className="block w-full"
+                        >
+                          {member.acceptedAt
+                            ? new Date(member.acceptedAt).toLocaleDateString(locale, {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                              })
+                            : t('common.notAvailable')}
+                        </Link>
                       </td>
                     </tr>
                   ))

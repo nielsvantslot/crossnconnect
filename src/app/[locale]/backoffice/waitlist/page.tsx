@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma';
 import { getTranslation } from '@/i18n';
+import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ActionButtons } from './action-buttons';
 
 // Force dynamic rendering - this page requires database access
 export const dynamic = 'force-dynamic';
@@ -17,6 +17,15 @@ export default async function WaitlistPage({
   const waitlistEntries = await prisma.member.findMany({
     where: {
       status: 'PENDING',
+      deletedAt: null,  // Only non-deleted members
+    },
+    include: {
+      occupation: {
+        select: {
+          name: true,
+          nameEn: true,
+        },
+      },
     },
     orderBy: {
       createdAt: 'desc',
@@ -64,38 +73,47 @@ export default async function WaitlistPage({
                   <th scope="col" className="px-3 sm:px-6 py-3 hidden md:table-cell">
                     {t('backoffice.waitlist.table.signedUp')}
                   </th>
-                  <th scope="col" className="px-3 sm:px-6 py-3">
-                    {t('backoffice.waitlist.table.actions')}
-                  </th>
                 </tr>
               </thead>
               <tbody>
                 {waitlistEntries.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-3 sm:px-6 py-4 text-center text-muted-foreground">
+                    <td colSpan={3} className="px-3 sm:px-6 py-4 text-center text-muted-foreground">
                       {t('backoffice.waitlist.noPendingEntries')}
                     </td>
                   </tr>
                 ) : (
                   waitlistEntries.map((entry) => (
-                    <tr key={entry.id} className="border-b hover:bg-muted/50">
-                      <td className="px-3 sm:px-6 py-4 font-medium">{entry.name}</td>
-                      <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm">{entry.email}</td>
-                      <td className="px-3 sm:px-6 py-4 hidden md:table-cell text-xs sm:text-sm">
-                        {new Date(entry.createdAt).toLocaleDateString(locale, {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
+                    <tr key={entry.id} className="border-b hover:bg-muted/50 cursor-pointer transition-colors">
+                      <td className="px-3 sm:px-6 py-4 font-medium">
+                        <Link 
+                          href={`/${locale}/backoffice/waitlist/${entry.id}`}
+                          className="block w-full"
+                        >
+                          {entry.firstName} {entry.lastName}
+                        </Link>
                       </td>
-                      <td className="px-3 sm:px-6 py-4">
-                        <ActionButtons 
-                          entryId={entry.id}
-                          acceptLabel={t('backoffice.waitlist.accept')}
-                          denyLabel={t('backoffice.waitlist.deny')}
-                        />
+                      <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm">
+                        <Link 
+                          href={`/${locale}/backoffice/waitlist/${entry.id}`}
+                          className="block w-full"
+                        >
+                          {entry.email}
+                        </Link>
+                      </td>
+                      <td className="px-3 sm:px-6 py-4 hidden md:table-cell text-xs sm:text-sm">
+                        <Link 
+                          href={`/${locale}/backoffice/waitlist/${entry.id}`}
+                          className="block w-full"
+                        >
+                          {new Date(entry.createdAt).toLocaleDateString(locale, {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </Link>
                       </td>
                     </tr>
                   ))

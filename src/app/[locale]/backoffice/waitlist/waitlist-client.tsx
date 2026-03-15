@@ -10,7 +10,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 interface Member {
   id: string;
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  occupation: string;
   status: 'PENDING' | 'ACCEPTED' | 'DENIED';
   createdAt: Date;
 }
@@ -84,6 +87,12 @@ export function BackofficeClient({ lng, entries }: BackofficeClientProps) {
                   <th scope="col" className="px-6 py-3">
                     {t('backoffice.waitlist.table.email')}
                   </th>
+                  <th scope="col" className="px-4 py-3">
+                    City
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    Occupation
+                  </th>
                   <th scope="col" className="px-6 py-3">
                     {t('backoffice.waitlist.table.signedUp')}
                   </th>
@@ -95,15 +104,17 @@ export function BackofficeClient({ lng, entries }: BackofficeClientProps) {
               <tbody>
                 {entries.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-6 py-4 text-center text-muted-foreground">
+                    <td colSpan={6} className="px-6 py-4 text-center text-muted-foreground">
                       {t('backoffice.waitlist.noPendingEntries')}
                     </td>
                   </tr>
                 ) : (
                   entries.map((entry) => (
                     <tr key={entry.id} className="border-b hover:bg-muted/50">
-                      <td className="px-6 py-4 font-medium">{entry.name}</td>
+                      <td className="px-6 py-4 font-medium">{`${entry.firstName} ${entry.lastName}`}</td>
                       <td className="px-6 py-4">{entry.email}</td>
+                      <td className="px-4 py-4">{entry.city}</td>
+                      <td className="px-4 py-4 text-sm">{entry.occupation}</td>
                       <td className="px-6 py-4">
                         {new Date(entry.createdAt).toLocaleDateString('en-US', {
                           year: 'numeric',
