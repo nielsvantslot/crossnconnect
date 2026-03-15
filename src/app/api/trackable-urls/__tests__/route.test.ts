@@ -49,9 +49,9 @@ describe('/api/trackable-urls', () => {
           name: 'Campaign 1',
           createdAt: new Date('2024-01-01'),
           clicks: [
-            { id: '1', ipAddress: '192.168.1.1', clickedAt: new Date('2024-01-02') },
-            { id: '2', ipAddress: '192.168.1.2', clickedAt: new Date('2024-01-03') },
-            { id: '3', ipAddress: '192.168.1.1', clickedAt: new Date('2024-01-04') },
+            { id: '1', ipAddressHash: '192.168.1.1', clickedAt: new Date('2024-01-02') },
+            { id: '2', ipAddressHash: '192.168.1.2', clickedAt: new Date('2024-01-03') },
+            { id: '3', ipAddressHash: '192.168.1.1', clickedAt: new Date('2024-01-04') },
           ],
         },
         {
@@ -100,9 +100,9 @@ describe('/api/trackable-urls', () => {
           name: 'Test',
           createdAt: new Date(),
           clicks: [
-            { id: '1', ipAddress: '192.168.1.1', clickedAt: new Date() },
-            { id: '2', ipAddress: null, clickedAt: new Date() },
-            { id: '3', ipAddress: '192.168.1.1', clickedAt: new Date() },
+            { id: '1', ipAddressHash: '192.168.1.1', clickedAt: new Date() },
+            { id: '2', ipAddressHash: null, clickedAt: new Date() },
+            { id: '3', ipAddressHash: '192.168.1.1', clickedAt: new Date() },
           ],
         },
       ];

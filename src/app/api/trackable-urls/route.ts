@@ -26,7 +26,7 @@ export async function GET() {
         clicks: {
           select: {
             id: true,
-            ipAddress: true,
+            ipAddressHash: true,
             clickedAt: true,
           },
         },
@@ -40,7 +40,7 @@ export async function GET() {
       name: url.name,
       createdAt: url.createdAt,
       totalClicks: url.clicks.length,
-      uniqueClicks: new Set(url.clicks.map((c) => c.ipAddress).filter(Boolean)).size,
+      uniqueClicks: new Set(url.clicks.map((c) => c.ipAddressHash).filter(Boolean)).size,
       lastClickedAt: url.clicks.length > 0 
         ? url.clicks[url.clicks.length - 1].clickedAt 
         : null,
