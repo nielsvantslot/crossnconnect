@@ -48,6 +48,7 @@ describe('Encryption Module', () => {
         },
       }));
       
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { encrypt: encryptWithoutKey } = require('../encryption');
       expect(() => encryptWithoutKey('test')).toThrow('ENCRYPTION_KEY is not set');
       

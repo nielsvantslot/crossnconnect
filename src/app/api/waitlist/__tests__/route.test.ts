@@ -198,7 +198,7 @@ describe('/api/waitlist', () => {
 
       for (const { field, error } of testCases) {
         const data = createValidMemberData();
-        delete (data as any)[field];
+        delete (data as Record<string, unknown>)[field];
 
         const request = new NextRequest('http://localhost:3000/api/waitlist', {
           method: 'POST',
@@ -218,7 +218,7 @@ describe('/api/waitlist', () => {
 
       for (const field of testCases) {
         const data = createValidMemberData();
-        delete (data as any)[field];
+        delete (data as Record<string, unknown>)[field];
 
         const request = new NextRequest('http://localhost:3000/api/waitlist', {
           method: 'POST',

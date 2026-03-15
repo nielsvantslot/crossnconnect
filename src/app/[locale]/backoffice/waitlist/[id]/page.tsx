@@ -5,7 +5,7 @@ import { getTranslation } from '@/i18n';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Check, X, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Check, X } from 'lucide-react';
 import { ActionButtons } from '../action-buttons';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 

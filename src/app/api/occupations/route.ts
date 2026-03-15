@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
  * GET /api/occupations
  * Returns all available occupations ordered by display order
  */
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     const occupations = await prisma.occupation.findMany({
       orderBy: { order: 'asc' },

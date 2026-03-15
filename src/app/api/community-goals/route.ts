@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
  * GET /api/community-goals
  * Returns all available community goals ordered by display order
  */
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     const goals = await prisma.communityGoal.findMany({
       orderBy: { order: 'asc' },

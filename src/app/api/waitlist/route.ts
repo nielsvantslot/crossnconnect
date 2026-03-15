@@ -40,7 +40,7 @@ export async function GET() {
     });
     
     // Don't return encrypted IBANs to client
-    const sanitizedEntries = entries.map(({ iban, ...entry }) => ({
+    const sanitizedEntries = entries.map(({ iban: _iban, ...entry }) => ({
       ...entry,
       // IBAN is excluded from response for security
     }));
@@ -261,7 +261,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Handle Disciplines (create new if custom)
-    let finalDisciplineIds = disciplineIds || [];
+    const finalDisciplineIds = disciplineIds || [];
     
     if (disciplineCustom && disciplineCustom.trim()) {
       // Check if this custom discipline already exists
@@ -365,7 +365,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Return success but without sensitive data
-    const { iban: _, ...safeEntry } = entry;
+    const { iban: _iban2, ...safeEntry } = entry;
 
     return NextResponse.json(
       { 

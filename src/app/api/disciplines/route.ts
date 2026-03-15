@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
  * GET /api/disciplines
  * Returns all available disciplines ordered by display order
  */
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     const disciplines = await prisma.discipline.findMany({
       orderBy: { order: 'asc' },

@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
 // Mock auth before importing middleware
 jest.mock('@/lib/auth-config', () => ({

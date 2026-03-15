@@ -80,7 +80,6 @@ interface CommunityGoal {
 
 const TOTAL_STEPS = 5;
 const CUSTOM_OCCUPATION_VALUE = '__custom__';
-const CUSTOM_DISCIPLINE_VALUE = '__custom__';
 
 export function WaitlistForm({ translations: t, locale }: WaitlistFormProps) {
   // Helper to get localized name

@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import { Sidebar } from '../sidebar';
-import { signOut } from 'next-auth/react';
 import { usePathname, useParams } from 'next/navigation';
 
 // Mock NextAuth

@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
  * GET /api/industries
  * Returns all available industries ordered by display order
  */
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     const industries = await prisma.industry.findMany({
       orderBy: { order: 'asc' },
