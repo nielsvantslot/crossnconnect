@@ -8,11 +8,14 @@ import prisma from '@/lib/prisma';
 export async function GET() {
   try {
     const industries = await prisma.industry.findMany({
+      where: { archivedAt: null },  // Only active industries
       orderBy: { order: 'asc' },
       select: {
         id: true,
+        code: true,
         name: true,
         nameEn: true,
+        isSystem: true,
       },
     });
 

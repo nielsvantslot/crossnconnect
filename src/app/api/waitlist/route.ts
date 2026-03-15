@@ -6,6 +6,40 @@ import { encryptIBAN } from '@/lib/encryption';
 import { validateEmail, validatePhone, validateIBAN } from '@/lib/validation';
 import { HorseExperienceLevel, Prisma } from '@prisma/client';
 
+/**
+ * Generate a unique code from a name
+ */
+async function generateUniqueCode(name: string, model: 'occupation' | 'discipline'): Promise<string> {
+  // Base code: uppercase, replace spaces with underscores, remove special chars
+  const baseCode = name
+    .toUpperCase()
+    .replace(/\s+/g, '_')
+    .replace(/[^A-Z0-9_]/g, '')
+    .substring(0, 40); // Leave room for counter suffix
+  
+  // Check if code exists
+  let code = baseCode;
+  let counter = 1;
+  
+  while (true) {
+    let existing;
+    
+    if (model === 'occupation') {
+      existing = await prisma.occupation.findUnique({ where: { code } });
+    } else {
+      existing = await prisma.discipline.findUnique({ where: { code } });
+    }
+    
+    if (!existing) {
+      return code;
+    }
+    
+    // Add counter and try again
+    code = `${baseCode}_${counter}`;
+    counter++;
+  }
+}
+
 // GET /api/waitlist - Get all waitlist entries (admin only)
 export async function GET() {
   try {
@@ -197,11 +231,16 @@ export async function POST(request: NextRequest) {
     // Handle Occupation (create new if custom)
     let finalOccupationId = occupationId;
     if (occupationCustom && !occupationId) {
+      const sanitizedName = sanitizeString(occupationCustom);
+      const code = await generateUniqueCode(sanitizedName, 'occupation');
+      
       const customOccupation = await prisma.occupation.create({
         data: {
-          name: sanitizeString(occupationCustom),
-          nameEn: sanitizeString(occupationCustom),
+          code,
+          name: sanitizedName,
+          nameEn: sanitizedName,
           requiresWorkDetails: false,
+          isSystem: false,  // Custom occupation
           order: 999,  // Custom occupations at end
         },
       });
@@ -282,12 +321,16 @@ export async function POST(request: NextRequest) {
         }
       } else {
         // Create new discipline
+        const sanitizedName = sanitizeString(disciplineCustom);
+        const code = await generateUniqueCode(sanitizedName, 'discipline');
+        
         const newDiscipline = await prisma.discipline.create({
           data: {
-            name: sanitizeString(disciplineCustom),
-            nameEn: sanitizeString(disciplineCustom),
+            code,
+            name: sanitizedName,
+            nameEn: sanitizedName,
+            isSystem: false,  // Custom discipline
             order: 999,
-            isPredefined: false,
           },
         });
         finalDisciplineIds.push(newDiscipline.id);

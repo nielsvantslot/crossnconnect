@@ -24,17 +24,22 @@ async function main() {
 
   // Seed Occupations (Normalized)
   const occupations = [
-    { name: 'Student', nameEn: 'Student', requiresWorkDetails: true, order: 1 },
-    { name: 'Young professional', nameEn: 'Young professional', requiresWorkDetails: true, order: 2 },
-    { name: 'Ondernemer', nameEn: 'Entrepreneur', requiresWorkDetails: true, order: 3 },
-    { name: 'Ruiter', nameEn: 'Rider', requiresWorkDetails: false, order: 4 },
-    { name: 'Werkzaam in de paardensector', nameEn: 'Working in horse sector', requiresWorkDetails: false, order: 5 },
+    { code: 'STUDENT', name: 'Student', nameEn: 'Student', requiresWorkDetails: true, isSystem: true, order: 1 },
+    { code: 'YOUNG_PROFESSIONAL', name: 'Young professional', nameEn: 'Young professional', requiresWorkDetails: true, isSystem: true, order: 2 },
+    { code: 'ENTREPRENEUR', name: 'Ondernemer', nameEn: 'Entrepreneur', requiresWorkDetails: true, isSystem: true, order: 3 },
+    { code: 'RIDER', name: 'Ruiter', nameEn: 'Rider', requiresWorkDetails: false, isSystem: true, order: 4 },
+    { code: 'HORSE_INDUSTRY', name: 'Werkzaam in de paardensector', nameEn: 'Working in horse sector', requiresWorkDetails: false, isSystem: true, order: 5 },
   ];
 
   for (const occupation of occupations) {
     await prisma.occupation.upsert({
-      where: { name: occupation.name },
-      update: { nameEn: occupation.nameEn, requiresWorkDetails: occupation.requiresWorkDetails, order: occupation.order },
+      where: { code: occupation.code },
+      update: { 
+        name: occupation.name,
+        nameEn: occupation.nameEn, 
+        requiresWorkDetails: occupation.requiresWorkDetails, 
+        order: occupation.order 
+      },
       create: occupation,
     });
   }
@@ -43,22 +48,26 @@ async function main() {
 
   // Seed Industries (Normalized)
   const industries = [
-    { name: 'Tech / IT', nameEn: 'Tech / IT', order: 1 },
-    { name: 'Financiën', nameEn: 'Finance', order: 2 },
-    { name: 'Marketing / Communicatie', nameEn: 'Marketing / Communication', order: 3 },
-    { name: 'Retail / Verkoop', nameEn: 'Retail / Sales', order: 4 },
-    { name: 'Gezondheidszorg', nameEn: 'Healthcare', order: 5 },
-    { name: 'Onderwijs', nameEn: 'Education', order: 6 },
-    { name: 'Horeca', nameEn: 'Hospitality', order: 7 },
-    { name: 'Paardensector', nameEn: 'Horse Industry', order: 8 },
-    { name: 'Creatief / Media', nameEn: 'Creative / Media', order: 9 },
-    { name: 'Overheid', nameEn: 'Government', order: 10 },
+    { code: 'TECH_IT', name: 'Tech / IT', nameEn: 'Tech / IT', isSystem: true, order: 1 },
+    { code: 'FINANCE', name: 'Financiën', nameEn: 'Finance', isSystem: true, order: 2 },
+    { code: 'MARKETING', name: 'Marketing / Communicatie', nameEn: 'Marketing / Communication', isSystem: true, order: 3 },
+    { code: 'RETAIL', name: 'Retail / Verkoop', nameEn: 'Retail / Sales', isSystem: true, order: 4 },
+    { code: 'HEALTHCARE', name: 'Gezondheidszorg', nameEn: 'Healthcare', isSystem: true, order: 5 },
+    { code: 'EDUCATION', name: 'Onderwijs', nameEn: 'Education', isSystem: true, order: 6 },
+    { code: 'HOSPITALITY', name: 'Horeca', nameEn: 'Hospitality', isSystem: true, order: 7 },
+    { code: 'HORSE_INDUSTRY', name: 'Paardensector', nameEn: 'Horse Industry', isSystem: true, order: 8 },
+    { code: 'CREATIVE', name: 'Creatief / Media', nameEn: 'Creative / Media', isSystem: true, order: 9 },
+    { code: 'GOVERNMENT', name: 'Overheid', nameEn: 'Government', isSystem: true, order: 10 },
   ];
 
   for (const industry of industries) {
     await prisma.industry.upsert({
-      where: { name: industry.name },
-      update: { nameEn: industry.nameEn, order: industry.order },
+      where: { code: industry.code },
+      update: { 
+        name: industry.name,
+        nameEn: industry.nameEn, 
+        order: industry.order 
+      },
       create: industry,
     });
   }
@@ -67,18 +76,22 @@ async function main() {
 
   // Seed Disciplines
   const disciplines = [
-    { name: 'Springen', nameEn: 'Show Jumping', order: 1, isPredefined: true },
-    { name: 'Dressuur', nameEn: 'Dressage', order: 2, isPredefined: true },
-    { name: 'Eventing', nameEn: 'Eventing', order: 3, isPredefined: true },
-    { name: 'Western', nameEn: 'Western', order: 4, isPredefined: true },
-    { name: 'Recreatief / meerdere disciplines', nameEn: 'Recreational / multiple disciplines', order: 5, isPredefined: true },
-    { name: 'Anders', nameEn: 'Other', order: 6, isPredefined: true },
+    { code: 'SHOW_JUMPING', name: 'Springen', nameEn: 'Show Jumping', isSystem: true, order: 1 },
+    { code: 'DRESSAGE', name: 'Dressuur', nameEn: 'Dressage', isSystem: true, order: 2 },
+    { code: 'EVENTING', name: 'Eventing', nameEn: 'Eventing', isSystem: true, order: 3 },
+    { code: 'WESTERN', name: 'Western', nameEn: 'Western', isSystem: true, order: 4 },
+    { code: 'RECREATIONAL', name: 'Recreatief / meerdere disciplines', nameEn: 'Recreational / multiple disciplines', isSystem: true, order: 5 },
+    { code: 'OTHER', name: 'Anders', nameEn: 'Other', isSystem: true, order: 6 },
   ];
 
   for (const discipline of disciplines) {
     await prisma.discipline.upsert({
-      where: { name: discipline.name },
-      update: { nameEn: discipline.nameEn, order: discipline.order, isPredefined: discipline.isPredefined },
+      where: { code: discipline.code },
+      update: { 
+        name: discipline.name,
+        nameEn: discipline.nameEn, 
+        order: discipline.order 
+      },
       create: discipline,
     });
   }
@@ -87,17 +100,21 @@ async function main() {
 
   // Seed Community Goals
   const communityGoals = [
-    { name: 'Netwerk', nameEn: 'Network', order: 1 },
-    { name: 'Inspiratie', nameEn: 'Inspiration', order: 2 },
-    { name: 'Plezier', nameEn: 'Fun', order: 3 },
-    { name: 'Kennis delen', nameEn: 'Share knowledge', order: 4 },
-    { name: 'Samenwerken aan projecten', nameEn: 'Collaborate on projects', order: 5 },
+    { code: 'NETWORK', name: 'Netwerk', nameEn: 'Network', isSystem: true, order: 1 },
+    { code: 'INSPIRATION', name: 'Inspiratie', nameEn: 'Inspiration', isSystem: true, order: 2 },
+    { code: 'FUN', name: 'Plezier', nameEn: 'Fun', isSystem: true, order: 3 },
+    { code: 'SHARE_KNOWLEDGE', name: 'Kennis delen', nameEn: 'Share knowledge', isSystem: true, order: 4 },
+    { code: 'COLLABORATE', name: 'Samenwerken aan projecten', nameEn: 'Collaborate on projects', isSystem: true, order: 5 },
   ];
 
   for (const goal of communityGoals) {
     await prisma.communityGoal.upsert({
-      where: { name: goal.name },
-      update: { nameEn: goal.nameEn, order: goal.order },
+      where: { code: goal.code },
+      update: { 
+        name: goal.name,
+        nameEn: goal.nameEn, 
+        order: goal.order 
+      },
       create: goal,
     });
   }

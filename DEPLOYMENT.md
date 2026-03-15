@@ -4,6 +4,22 @@
 
 Your app is ready to deploy! Build passes locally.
 
+## 🔄 Migrating Existing Deployment?
+
+**If you have an existing deployment with data**, you need to migrate to the new code-based reference data:
+
+1. Backup your database first!
+2. Run migration script with your production DATABASE_URL:
+   ```bash
+   DATABASE_URL="your-production-db-url" npm run prisma:migrate-codes
+   ```
+3. Verify migration:
+   ```bash
+   DATABASE_URL="your-production-db-url" npm run prisma:verify
+   ```
+
+**Fresh deployment?** Continue below ⬇️
+
 ## 🚀 Deploy to Vercel (Recommended, ~3 minutes)
 
 ### Step 1: Set Up Database
@@ -40,14 +56,29 @@ openssl rand -base64 32
 3. After deployment, update `NEXTAUTH_URL` with your actual Vercel URL
 
 ### Step 5: Initialize Database
-Run locally to create tables and seed admin:
+⚠️ **IMPORTANT**: This step is required to create database tables and seed reference data (occupations, industries, disciplines, community goals).
 
-```bash
+Run locally with production database URL:
+
+**PowerShell (Windows):**
+```powershell
 $env:DATABASE_URL="your-production-database-url"
-npm run prisma:push
+npm run deploy:db
 ```
 
-**Default admin**: `admin@crossconnect.com` / `admin123`
+**Bash (Mac/Linux):**
+```bash
+DATABASE_URL="your-production-database-url" npm run deploy:db
+```
+
+This will:
+1. ✅ Create all database tables
+2. ✅ Seed reference data (occupations, industries, etc.)
+3. ✅ Create admin user
+
+**Default admin credentials:**
+- Email: `admin@crossconnect.com`
+- Password: `C&C_Admin2024!`
 
 ## ✅ Done!
 
@@ -106,16 +137,30 @@ NODE_ENV=production
 3. Service will auto-deploy
 
 ### Step 6: Initialize Database
-After deployment completes, run locally:
+⚠️ **IMPORTANT**: This step is required to create database tables and seed reference data.
 
-```bash
+After deployment completes, run locally with your production database:
+
+**PowerShell (Windows):**
+```powershell
 # Use the DATABASE_URL you copied earlier
 $env:DATABASE_URL="postgresql://your-render-connection-string"
-npm run prisma:push
-npm run prisma:seed
+npm run deploy:db
 ```
 
-This creates: `admin@crossconnect.com` / `admin123`
+**Bash (Mac/Linux):**
+```bash
+DATABASE_URL="postgresql://your-render-connection-string" npm run deploy:db
+```
+
+This will:
+1. ✅ Create all database tables
+2. ✅ Seed reference data (occupations, industries, disciplines, community goals)
+3. ✅ Create admin user
+
+**Admin credentials:**
+- Email: `admin@crossconnect.com`
+- Password: `C&C_Admin2024!`
 
 ## ✅ Done!
 
@@ -143,16 +188,106 @@ The middleware has been optimized for Edge Runtime:
 
 ---
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
-**Build fails with Prisma error?**
-- Make sure DATABASE_URL is set in Vercel environment variables
-- Check that the connection string is correct
+### "No options available" in signup form dropdowns
 
-**Can't login to admin?**
-- Run the seed script with production DATABASE_URL
-- Verify admin user exists in database
+**Problem**: Form dropdowns (occupation, industry, disciplines, etc.) are empty.
 
-**404 on /backoffice?**
-- Check Vercel deployment logs for errors
-- Ensure all files are committed to GitHub
+**Solution**: Database needs to be seeded with reference data.
+
+```powershell
+# Set your production database URL
+$env:DATABASE_URL="postgresql://your-production-url"
+
+# Run database initialization
+npm run deploy:db
+```
+
+This seeds:
+- 5 Occupations (Student, Entrepreneur, Rider, etc.)
+- 10 Industries (Tech/IT, Finance, Marketing, etc.)
+- 6 Disciplines (Show Jumping, Dressage, Eventing, etc.)
+- 5 Community Goals (Network, Inspiration, Fun, etc.)
+- 1 Admin user
+
+### Build fails with Prisma error
+
+**Problem**: `Error: Prisma Client could not find a schema.prisma`
+
+**Solution**:
+- Ensure DATABASE_URL is set in environment variables
+- Check connection string format: `postgresql://user:pass@host:5432/dbname`
+- Verify database is accessible from your deployment platform
+
+### Can't login to admin
+
+**Problem**: Invalid credentials or "User not found"
+
+**Solution**:
+1. Verify database was seeded:
+   ```powershell
+   $env:DATABASE_URL="your-db-url"
+   npm run prisma:studio
+   ```
+   Check if Admin table has a record.
+
+2. Re-run seeder if needed:
+   ```powershell
+   npm run deploy:db
+   ```
+
+**Default credentials:**
+- Email: `admin@crossconnect.com`
+- Password: `C&C_Admin2024!`
+
+### 404 on /backoffice
+
+**Problem**: Admin pages return 404
+
+**Solution**:
+- Check deployment logs for build errors
+- Ensure all files are committed to Git and pushed
+- Verify the build succeeded on your hosting platform
+
+### Slow first request (Render Free Tier)
+
+**Expected behavior**: Free tier services sleep after 15 minutes of inactivity. First request takes ~30 seconds to wake up.
+
+---
+
+## 🔑 Database Commands Reference
+
+```bash
+# Deploy database (schema + seed)
+npm run deploy:db
+
+# Only push schema changes
+npm run prisma:push
+
+# Only run seeder
+npm run prisma:seed
+
+# Migrate existing data to code-based system (one-time)
+npm run prisma:migrate-codes
+
+# Verify reference data codes
+npm run prisma:verify
+
+# Open Prisma Studio (database GUI)
+npm run prisma:studio
+
+# Generate Prisma Client
+npm run prisma:generate
+```
+
+---
+
+## 📚 Additional Resources
+
+- [Next.js Deployment Documentation](https://nextjs.org/docs/deployment)
+- [Prisma Deployment Guide](https://www.prisma.io/docs/guides/deployment)
+- [NextAuth.js Documentation](https://next-auth.js.org/)
+- [Vercel Documentation](https://vercel.com/docs)
+- [Render Documentation](https://render.com/docs)
+

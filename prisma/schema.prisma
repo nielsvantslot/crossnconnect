@@ -128,28 +128,38 @@ model Member {
 // NEW: Normalized Occupation
 model Occupation {
   id                   String    @id @default(cuid())
-  name                 String    @unique @db.VarChar(100)
+  code                 String    @unique @db.VarChar(50)  // Stabiele identifier (enum-achtig)
+  name                 String    @db.VarChar(100)  // Display naam (kan wijzigen)
   nameEn               String?   @db.VarChar(100)
   requiresWorkDetails  Boolean   @default(false)
+  isSystem             Boolean   @default(false)  // true = system seed, false = custom
   order                Int       @default(0)
+  archivedAt           DateTime? // Soft delete voor deprecated items
   members              Member[]
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
   
+  @@index([code])
   @@index([order])
+  @@index([isSystem])
 }
 
 // NEW: Normalized Industry
 model Industry {
-  id        String    @id @default(cuid())
-  name      String    @unique @db.VarChar(100)
-  nameEn    String?   @db.VarChar(100)
-  order     Int       @default(0)
-  members   Member[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id         String    @id @default(cuid())
+  code       String    @unique @db.VarChar(50)  // Stabiele identifier (enum-achtig)
+  name       String    @db.VarChar(100)  // Display naam (kan wijzigen)
+  nameEn     String?   @db.VarChar(100)
+  isSystem   Boolean   @default(false)  // true = system seed, false = custom
+  order      Int       @default(0)
+  archivedAt DateTime? // Soft delete voor deprecated items
+  members    Member[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   
+  @@index([code])
   @@index([order])
+  @@index([isSystem])
 }
 
 // NEW: ENUM for Horse Experience Level
@@ -167,16 +177,19 @@ enum MemberStatus {
 // Normalized Discipline options (now allows dynamic creation)
 model Discipline {
   id         String              @id @default(cuid())
-  name       String              @unique @db.VarChar(100)
+  code       String              @unique @db.VarChar(50)  // Stabiele identifier (enum-achtig)
+  name       String              @db.VarChar(100)  // Display naam (kan wijzigen)
   nameEn     String?             @db.VarChar(100)
+  isSystem   Boolean             @default(false)  // true = system seed, false = custom (was: isPredefined)
   order      Int                 @default(0)
-  isPredefined Boolean           @default(true)  // False for user-created disciplines
+  archivedAt DateTime?           // Soft delete voor deprecated items
   members    MemberDiscipline[]
   createdAt  DateTime            @default(now())
   updatedAt  DateTime            @updatedAt
   
+  @@index([code])
   @@index([order])
-  @@index([isPredefined])
+  @@index([isSystem])
 }
 
 // Junction table for Member <-> Discipline (many-to-many)
@@ -194,15 +207,20 @@ model MemberDiscipline {
 
 // Normalized Community Goal options
 model CommunityGoal {
-  id        String                 @id @default(cuid())
-  name      String                 @unique @db.VarChar(100)
-  nameEn    String?                @db.VarChar(100)
-  order     Int                    @default(0)
-  members   MemberCommunityGoal[]
-  createdAt DateTime               @default(now())
-  updatedAt DateTime               @updatedAt
+  id         String                 @id @default(cuid())
+  code       String                 @unique @db.VarChar(50)  // Stabiele identifier (enum-achtig)
+  name       String                 @db.VarChar(100)  // Display naam (kan wijzigen)
+  nameEn     String?                @db.VarChar(100)
+  isSystem   Boolean                @default(false)  // true = system seed, false = custom
+  order      Int                    @default(0)
+  archivedAt DateTime?              // Soft delete voor deprecated items
+  members    MemberCommunityGoal[]
+  createdAt  DateTime               @default(now())
+  updatedAt  DateTime               @updatedAt
   
+  @@index([code])
   @@index([order])
+  @@index([isSystem])
 }
 
 // Junction table for Member <-> CommunityGoal (many-to-many)

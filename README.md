@@ -39,7 +39,8 @@ This will:
 - Start PostgreSQL database in a container
 - Build and start the Next.js application
 - Automatically run Prisma migrations
-- Seed the admin user
+- **Seed the database with reference data** (occupations, industries, disciplines, community goals)
+- Create default admin user
 - Make the app available at [http://localhost:3000](http://localhost:3000)
 - Enable hot reload for all code changes (via bind mount)
 
@@ -80,15 +81,35 @@ DATABASE_URL="postgresql://username:password@localhost:5432/crossnconnect_waitli
 
 Replace `username`, `password`, `localhost`, and `5432` with your PostgreSQL credentials.
 
-3. **Initialize Prisma:**
+3. **Initialize the database:**
 
 ```bash
 # Generate Prisma Client
 npm run prisma:generate
 
-# Push the schema to your database
-npm run prisma:push
+# Push the schema to your database and seed with reference data
+npm run deploy:db
+
+# Or do it step by step:
+npm run prisma:push    # Push schema
+npm run prisma:seed    # Seed reference data
 ```
+
+This will create the database schema and populate it with:
+- Default admin user (`admin@crossconnect.com` / `C&C_Admin2024!`)
+- 5 occupations (Student, Young professional, etc.)
+- 10 industries (Tech/IT, Financiën, Marketing, etc.)
+- 6 disciplines (Springen, Dressuur, Eventing, etc.)
+- 5 community goals (Netwerk, Inspiratie, Plezier, etc.)
+
+⚠️ **Important**: Database seeding is required for the waitlist form to work correctly. Without seeded data, dropdown menus will be empty.
+
+💡 **Reference Data Strategy**: Uses a **code-based approach** for stable, enum-like reference data:
+- Codes (e.g., `STUDENT`, `TECH_IT`) are stable identifiers that never change
+- Names can be safely updated without creating duplicates
+- Custom entries can be added at runtime (unlike database enums)
+- `isSystem` flag distinguishes seeded from user-created entries
+- TypeScript type safety via [reference-codes.ts](src/lib/reference-codes.ts)
 
 4. **Run the development server:**
 
@@ -102,7 +123,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 - `npm run prisma:generate` - Generate Prisma Client
 - `npm run prisma:push` - Push schema changes to database
+- `npm run prisma:seed` - Seed database with reference data
+- `npm run prisma:migrate-codes` - Migrate existing data to code-based system (one-time)
+- `npm run prisma:verify` - Verify reference data codes
 - `npm run prisma:studio` - Open Prisma Studio (database GUI)
+- `npm run deploy:db` - Deploy schema and seed data (combined)
 
 ## Available Scripts
 
@@ -113,9 +138,15 @@ npm run build            # Build for production
 npm run start            # Start production server
 
 # Database
-npm run prisma:generate  # Generate Prisma Client
-npm run prisma:push      # Push schema to database
-npm run prisma:studio    # Open Prisma Studio GUI
+npm run prisma:generate     # Generate Prisma Client
+npm run prisma:push         # Push schema to database
+npm run prisma:seed         # Seed reference data
+npm run prisma:migrate-slugs # Migrate to slug-based seeding (one-time)
+npm run prisma:studio       # Open Prisma Studio GUI
+npm run deploy:db           # Deploy schema + seed (combined)
+
+# Internationalization
+npm run i18n:extract     # Extract translations from code
 
 # Testing
 npm test                 # Run all tests
@@ -141,11 +172,17 @@ npm run test:coverage    # Run tests with coverage
 ## Docker Commands
 
 ```bash
+# Start/Stop
 docker-compose up           # Start all services
 docker-compose up -d        # Start in background
 docker-compose down         # Stop services
 docker-compose down -v      # Stop and remove data
 docker-compose logs -f      # View logs
+
+# Database operations in Docker
+docker exec crossnconnect-app npm run prisma:studio    # Open Prisma Studio
+docker exec crossnconnect-app npm run prisma:seed      # Re-seed database
+docker exec crossnconnect-app npm run deploy:db        # Re-deploy schema + seed
 ```
 
 ## Project Structure

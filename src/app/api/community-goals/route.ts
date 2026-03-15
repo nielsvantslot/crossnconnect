@@ -8,11 +8,14 @@ import prisma from '@/lib/prisma';
 export async function GET() {
   try {
     const goals = await prisma.communityGoal.findMany({
+      where: { archivedAt: null },  // Only active goals
       orderBy: { order: 'asc' },
       select: {
         id: true,
+        code: true,
         name: true,
         nameEn: true,
+        isSystem: true,
       },
     });
 

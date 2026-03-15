@@ -8,12 +8,15 @@ import prisma from '@/lib/prisma';
 export async function GET() {
   try {
     const occupations = await prisma.occupation.findMany({
+      where: { archivedAt: null },  // Only active occupations
       orderBy: { order: 'asc' },
       select: {
         id: true,
+        code: true,
         name: true,
         nameEn: true,
         requiresWorkDetails: true,
+        isSystem: true,
       },
     });
 
