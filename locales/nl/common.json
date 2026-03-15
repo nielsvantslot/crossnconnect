@@ -46,7 +46,6 @@
       "clubMembers": "Clubleden",
       "description": "Alle geaccepteerde leden van Cross & Connect Club",
       "noMembers": "Nog geen leden",
-      "noMembersYet": "Nog geen leden",
       "table": {
         "email": "E-mail",
         "joined": "Toegetreden",

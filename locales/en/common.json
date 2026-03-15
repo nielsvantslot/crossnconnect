@@ -46,7 +46,6 @@
       "clubMembers": "Club Members",
       "description": "All accepted members of Cross & Connect Club",
       "noMembers": "No members yet",
-      "noMembersYet": "No members yet",
       "table": {
         "email": "Email",
         "joined": "Joined",

@@ -100,7 +100,7 @@ export default async function MembersPage({
                 {members.length === 0 ? (
                   <tr>
                     <td colSpan={3} className="px-3 sm:px-6 py-4 text-center text-muted-foreground">
-                      {t('backoffice.members.noMembersYet')}
+                      {t('backoffice.members.noMembers')}
                     </td>
                   </tr>
                 ) : (

@@ -85,22 +85,3 @@ export const CommunityGoalCode = {
 } as const;
 
 export type CommunityGoalCode = typeof CommunityGoalCode[keyof typeof CommunityGoalCode];
-
-/**
- * Helper: Check if code is a system code
- */
-export function isSystemOccupation(code: string): code is OccupationCode {
-  return Object.values(OccupationCode).includes(code as OccupationCode);
-}
-
-export function isSystemIndustry(code: string): code is IndustryCode {
-  return Object.values(IndustryCode).includes(code as IndustryCode);
-}
-
-export function isSystemDiscipline(code: string): code is DisciplineCode {
-  return Object.values(DisciplineCode).includes(code as DisciplineCode);
-}
-
-export function isSystemCommunityGoal(code: string): code is CommunityGoalCode {
-  return Object.values(CommunityGoalCode).includes(code as CommunityGoalCode);
-}

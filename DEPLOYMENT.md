@@ -4,26 +4,10 @@
 
 Your app is ready to deploy! Build passes locally.
 
-## 🔄 Migrating Existing Deployment?
-
-**If you have an existing deployment with data**, you need to migrate to the new code-based reference data:
-
-1. Backup your database first!
-2. Run migration script with your production DATABASE_URL:
-   ```bash
-   DATABASE_URL="your-production-db-url" npm run prisma:migrate-codes
-   ```
-3. Verify migration:
-   ```bash
-   DATABASE_URL="your-production-db-url" npm run prisma:verify
-   ```
-
-**Fresh deployment?** Continue below ⬇️
-
-## 🚀 Deploy to Vercel (Recommended, ~3 minutes)
+## � Deploy to Vercel (Recommended, ~3 minutes)
 
 ### Step 1: Set Up Database
-1. Create a PostgreSQL database (options: Vercel Postgres, Neon, Supabase, Railway)
+1. Create a PostgreSQL database (recommended: [Neon](https://neon.tech))
 2. Get your connection string (format: `postgresql://user:pass@host:5432/dbname`)
 
 ### Step 2: Deploy to Vercel
@@ -50,31 +34,32 @@ Generate AUTH_SECRET locally:
 openssl rand -base64 32
 ```
 
-### Step 4: Deploy
-1. Click **"Deploy"**
-2. Wait ~2 minutes for build
-3. After deployment, update `NEXTAUTH_URL` with your actual Vercel URL
-
-### Step 5: Initialize Database
-⚠️ **IMPORTANT**: This step is required to create database tables and seed reference data (occupations, industries, disciplines, community goals).
-
-Run locally with production database URL:
+### Step 4: Initialize Database (first time only)
+Before the first deploy, push the schema and seed data using a direct connection:
 
 **PowerShell (Windows):**
 ```powershell
-$env:DATABASE_URL="your-production-database-url"
-npm run deploy:db
+$env:DATABASE_URL="your-direct-database-url"
+npx prisma migrate deploy
+npx prisma db seed
 ```
 
 **Bash (Mac/Linux):**
 ```bash
-DATABASE_URL="your-production-database-url" npm run deploy:db
+DATABASE_URL="your-direct-database-url" npx prisma migrate deploy && npx prisma db seed
 ```
 
 This will:
-1. ✅ Create all database tables
+1. ✅ Create all database tables via migrations
 2. ✅ Seed reference data (occupations, industries, etc.)
 3. ✅ Create admin user
+
+### Step 5: Deploy
+1. Click **"Deploy"**
+2. Wait ~2 minutes for build
+3. After deployment, update `NEXTAUTH_URL` with your actual Vercel URL
+
+The build automatically runs `prisma migrate deploy` + `prisma db seed` + `next build` on every deploy. Migrations are safe (only applies pending ones) and seeds use upserts.
 
 **Default admin credentials:**
 - Email: `admin@crossconnect.com`
@@ -83,91 +68,6 @@ This will:
 ## ✅ Done!
 
 Your app is live at: `https://your-app.vercel.app`
-
----
-
-## 🏗️ Deploy to Render (Free Forever, ~5 minutes)
-
-Render offers permanent free hosting with PostgreSQL included.
-
-### Step 1: Push to GitHub
-```bash
-git add .
-git commit -m "Ready for deployment"
-git push
-```
-
-### Step 2: Create PostgreSQL Database
-1. Go to https://render.com (sign up free)
-2. Click **"New +"** → **"PostgreSQL"**
-3. Name: `crossnconnect-db`
-4. Database: `crossnconnect_waitlist`
-5. User: `crossnconnect`
-6. Region: Choose closest to you
-7. Click **"Create Database"**
-8. Copy the **"Internal Database URL"** (starts with `postgresql://`)
-
-### Step 3: Deploy Web Service
-1. Click **"New +"** → **"Web Service"**
-2. Connect your GitHub repository
-3. Configure:
-   - **Name**: `crossnconnect-waitlist`
-   - **Region**: Same as database
-   - **Branch**: `main`
-   - **Runtime**: `Node`
-   - **Build Command**: `npm install && npm run build`
-   - **Start Command**: `npm start`
-   - **Instance Type**: Free
-
-### Step 4: Add Environment Variables
-In the web service settings, add these environment variables:
-
-```env
-DATABASE_URL=<paste-your-internal-database-url-here>
-AUTH_SECRET=Dy9i6UGyIuNEVwxzZi1Ih/P4v9sKE6uA+V1db+TJJmc=
-NEXTAUTH_URL=https://your-app-name.onrender.com
-NODE_ENV=production
-```
-
-**Replace** `NEXTAUTH_URL` with your actual Render URL (shown after deployment starts)
-
-### Step 5: Deploy
-1. Click **"Create Web Service"**
-2. Wait ~5 minutes for build and deploy
-3. Service will auto-deploy
-
-### Step 6: Initialize Database
-⚠️ **IMPORTANT**: This step is required to create database tables and seed reference data.
-
-After deployment completes, run locally with your production database:
-
-**PowerShell (Windows):**
-```powershell
-# Use the DATABASE_URL you copied earlier
-$env:DATABASE_URL="postgresql://your-render-connection-string"
-npm run deploy:db
-```
-
-**Bash (Mac/Linux):**
-```bash
-DATABASE_URL="postgresql://your-render-connection-string" npm run deploy:db
-```
-
-This will:
-1. ✅ Create all database tables
-2. ✅ Seed reference data (occupations, industries, disciplines, community goals)
-3. ✅ Create admin user
-
-**Admin credentials:**
-- Email: `admin@crossconnect.com`
-- Password: `C&C_Admin2024!`
-
-## ✅ Done!
-
-Your app is live at: `https://your-app-name.onrender.com`
-
-- **Public signup**: `/`
-- **Admin login**: `/backoffice`
 
 **Note**: Free tier sleeps after 15min of inactivity. First request after sleep takes ~30s.
 
