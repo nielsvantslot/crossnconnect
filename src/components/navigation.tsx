@@ -7,6 +7,9 @@ import { usePathname } from 'next/navigation';
 
 interface NavigationProps {
   locale: string;
+  translations: {
+    ourStory: string;
+  };
 }
 
 interface MenuItem {
@@ -14,12 +17,12 @@ interface MenuItem {
   label: string;
 }
 
-export function Navigation({ locale }: NavigationProps) {
+export function Navigation({ locale, translations: t }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
   const menuItems: MenuItem[] = [
-    { href: `/${locale}/our-story`, label: 'Ons Verhaal' },
+    { href: `/${locale}/our-story`, label: t.ourStory },
   ];
 
   useEffect(() => {

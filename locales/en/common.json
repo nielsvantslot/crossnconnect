@@ -247,5 +247,35 @@
     "funQuestionLabel": "Your horse and you are on a talent show. What is your act?",
     "funAnswerPlaceholder": "Your answer...",
     "consentText": "I give permission for the use of my data for organizing Cross & Connect activities, payments, and community communication."
+  },
+  "nav": {
+    "ourStory": "Our Story"
+  },
+  "ourStory": {
+    "pageTitle": "Corporate Story – Cross & Connect",
+    "heroTitle": "New generation. New energy. A new way of connecting.",
+    "intro1": "In collaboration with the Military, we introduce Cross & Connect: an exclusive community for ambitious talents between 20 and 35 years old who want to get more out of sports, networking, and unique experiences. In today's dynamic world, young professionals seek connection, inspiration, and opportunities that truly make a difference. Cross & Connect brings these elements together in an environment where sporting excitement, business growth, and unforgettable moments seamlessly come together.",
+    "intro2": "Just like the Military itself, Cross & Connect revolves around three powerful pillars: Top Sport, Networking, and Experience (top sport, business, pleasure), but above all, the connections you make here, the opportunities that arise, and the experiences you won't find anywhere else.",
+    "intro3": "For just €29 per month, you get access to a world where energy, ambition, and pleasure reinforce each other.",
+    "sportTitle": "Sport",
+    "sportText1": "As a member of Cross & Connect, you'll come into contact with the international elite of top sport. During the Military, you experience equestrian sport at the highest level up close, literally next to the action. As a Cross & Connect member, you have exclusive access to the Cross & Connect tent, right at the course. Here you enjoy an all-encompassing hospitality experience: unlimited food and drinks, entertainment, a vibrant atmosphere, and the best view of the sport.",
+    "sportText2": "It's sport as you rarely experience it: intense, international, and inspiring. With a setting that invites you to watch, experience, and connect.",
+    "networkTitle": "Networking",
+    "networkText1": "Where the Military has grown into one of the largest business meeting places in the Netherlands, Cross & Connect creates a new domain for young talent.",
+    "networkText2": "In an informal, warm, and energetic setting, you meet young professionals from all over the Netherlands: entrepreneurs, starters, young leaders, changemakers, and creatives, all driven by ambition and curiosity.",
+    "networkText3": "No stiff drinks receptions, but meaningful encounters. No exchanging business cards, but building relationships.",
+    "networkListTitle": "Cross & Connect is your place to:",
+    "networkListItem1": "expand your network in the equestrian world in general and the eventing world in particular",
+    "networkListItem2": "discover new business opportunities",
+    "networkListItem3": "connect with peers who share your pace, drive, and ideas",
+    "pleasureTitle": "Pleasure",
+    "pleasureText1": "At Cross & Connect, we believe that growth happens best when pleasure takes center stage. That's why we organize exclusive member activities throughout the year:",
+    "pleasureText2": "Drinks, rallies, sporting challenges, inspiring encounters, and surprising events ensure the community thrives. Not just during the Military, but 12 months a year.",
+    "pleasureText3": "The atmosphere? Accessible, energetic, stylish, and always full of new stories.",
+    "pleasureText4": "In short: the place to be for talented top athletes and entrepreneurs.",
+    "ctaTitle": "Become a member?",
+    "ctaSubtitle": "The waitlist is growing fast.",
+    "ctaText": "Due to great interest, Cross & Connect works with a waitlist. Are you interested? Let us know quickly, and you'll be placed on the waitlist. You'll receive a message as soon as possible about whether you've been accepted.",
+    "ctaButton": "Sign up"
   }
 }

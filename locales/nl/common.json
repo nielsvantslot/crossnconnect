@@ -247,5 +247,35 @@
     "funQuestionLabel": "Je paard en jij doen mee aan een talentenjacht. Wat is jullie act?",
     "funAnswerPlaceholder": "Jouw antwoord...",
     "consentText": "Ik geef toestemming voor het gebruik van mijn gegevens voor de organisatie van Cross & Connect activiteiten, betalingen en communicatie met de community."
+  },
+  "nav": {
+    "ourStory": "Ons Verhaal"
+  },
+  "ourStory": {
+    "pageTitle": "Corporate Story – Cross & Connect",
+    "heroTitle": "Nieuwe generatie. Nieuwe energie. Nieuwe manier van verbinden.",
+    "intro1": "In samenwerking met de Military introduceren wij Cross & Connect: een exclusieve community voor ambitieuze talenten tussen de 20 en 35 jaar die meer willen halen uit sport, netwerken en unieke belevenissen. In de dynamische wereld van vandaag zoeken jonge professionals verbinding, inspiratie en kansen die écht het verschil maken. Cross & Connect brengt deze elementen samen in een omgeving waar sportieve spanning, zakelijke groei en onvergetelijke momenten naadloos samenkomen.",
+    "intro2": "Net als de Military zelf draait Cross & Connect om drie krachtige pijlers: Topsport, Netwerken en Beleving (topsport, business, pleasure), maar bovenal om de connecties die je hier opdoet, de kansen die daardoor ontstaan en de ervaringen die je nergens anders vindt.",
+    "intro3": "Voor slechts €29 per maand krijg je toegang tot een wereld waar energie, ambitie en plezier elkaar versterken.",
+    "sportTitle": "Sport",
+    "sportText1": "Als deelnemer van Cross & Connect kom je in contact met de internationale topsport elite. Tijdens de Military ervaar je de paardensport op het hoogste niveau van dichtbij, letterlijk naast de actie. Als lid van Cross & Connect heb je exclusieve toegang tot de Cross & Connect tent, direct aan het parcours. Hier geniet je van een allesomvattende hospitality-ervaring: onbeperkt eten en drinken, entertainment, een bruisende sfeer en het beste zicht op de sport.",
+    "sportText2": "Het is sport zoals je die zelden beleeft: intens, internationaal en inspirerend. Met een setting die uitnodigt om te kijken, te beleven én te verbinden.",
+    "networkTitle": "Netwerken",
+    "networkText1": "Waar de Military is uitgegroeid tot een van de grootste zakelijke ontmoetingsplaatsen van Nederland, creëert Cross & Connect een nieuw domein voor jong talent.",
+    "networkText2": "In een informele, warme en energieke setting ontmoet je jonge professionals uit heel Nederland: ondernemers, starters, young leaders, changemakers en creatieven, allemaal gedreven door ambitie en nieuwsgierigheid.",
+    "networkText3": "Geen stijve borrels, maar betekenisvolle ontmoetingen. Geen visitekaartjes ruilen, maar relaties bouwen.",
+    "networkListTitle": "Cross & Connect is jouw plek om:",
+    "networkListItem1": "je netwerk uit te breiden in de hippische wereld in het algemeen en de eventing-wereld in het bijzonder",
+    "networkListItem2": "nieuwe zakelijke kansen te ontdekken",
+    "networkListItem3": "verbinding te leggen met leeftijdsgenoten die jouw tempo, drive en ideeën delen",
+    "pleasureTitle": "Pleasure",
+    "pleasureText1": "Bij Cross & Connect geloven we dat groei het best ontstaat wanneer plezier centraal staat. Daarom organiseren we het hele jaar door exclusieve ledenactiviteiten:",
+    "pleasureText2": "Borrels, rally's, sportieve challenges, inspirerende ontmoetingen en verrassende events zorgen ervoor dat de community leeft. Niet alleen tijdens de Military, maar 12 maanden per jaar.",
+    "pleasureText3": "De sfeer? Toegankelijk, energiek, stijlvol en altijd vol nieuwe verhalen.",
+    "pleasureText4": "Kortom: dé place to be voor talentvolle topsporters en ondernemers.",
+    "ctaTitle": "Lid worden?",
+    "ctaSubtitle": "De wachtlijst groeit snel.",
+    "ctaText": "Vanwege de grote belangstelling werkt Cross & Connect met een wachtlijst. Ben je geïnteresseerd? Laat het snel weten, dan kom je op de wachtlijst te staan. Je ontvangt daarna zo snel mogelijk bericht of je bent toegelaten.",
+    "ctaButton": "Schrijf je in"
   }
 }

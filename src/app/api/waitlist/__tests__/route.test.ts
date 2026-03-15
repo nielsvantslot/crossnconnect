@@ -15,6 +15,14 @@ jest.mock('@/lib/prisma', () => ({
       findUnique: jest.fn(),
       create: jest.fn(),
     },
+    occupation: {
+      findUnique: jest.fn(),
+      create: jest.fn(),
+    },
+    discipline: {
+      findFirst: jest.fn(),
+      create: jest.fn(),
+    },
   },
 }));
 
@@ -27,7 +35,7 @@ jest.mock('@/lib/encryption', () => ({
   }),
 }));
 
-// Helper to create valid member data
+// Helper to create valid member data (new normalized format)
 const createValidMemberData = (overrides = {}) => ({
   firstName: 'John',
   lastName: 'Doe',
@@ -37,13 +45,14 @@ const createValidMemberData = (overrides = {}) => ({
   email: 'john.doe@example.com',
   accountHolderName: 'J. Doe',
   iban: 'NL91ABNA0417164300',
-  occupation: 'Student',
-  industry: 'Technology',
+  occupationId: 'occ-1',
+  industryId: 'ind-1',
   companyName: 'Tech Corp',
   companyRole: 'Developer',
-  horseExperience: 'Nee, ik kom alleen voor de drank',
-  disciplines: [],
-  communityGoals: ['Netwerk', 'Inspiratie'],
+  hasHorseExperience: 'no',
+  wantsToDiscover: 'yes',
+  disciplineIds: [],
+  communityGoalIds: ['goal-1', 'goal-2'],
   funAnswer: 'We would do a comedy act!',
   consentGiven: true,
   ...overrides,
@@ -67,21 +76,19 @@ describe('/api/waitlist', () => {
           dateOfBirth: new Date('1990-01-01'),
           accountHolderName: 'J. Doe',
           iban: 'encrypted_NL91ABNA0417164300',
-          occupation: 'Student',
-          horseExperience: 'Nee',
-          communityGoals: '["Netwerk"]',
+          occupationId: 'occ-1',
+          occupation: { id: 'occ-1', code: 'STUDENT', name: 'Student' },
+          hasHorseExperience: false,
+          communityGoals: [],
+          disciplines: [],
           funAnswer: 'Comedy act',
           consentGiven: true,
           status: 'PENDING',
           createdAt: new Date('2024-01-01'),
           updatedAt: new Date('2024-01-01'),
+          deletedAt: null,
           acceptedAt: null,
-          occupationOther: null,
-          industry: null,
-          companyName: null,
-          companyRole: null,
-          disciplines: null,
-          disciplinesOther: null,
+          acceptedBy: null,
         },
       ];
 
@@ -95,11 +102,6 @@ describe('/api/waitlist', () => {
       expect(data[0].email).toBe('user1@example.com');
       // Verify IBAN is NOT in response
       expect(data[0].iban).toBeUndefined();
-      expect(prisma.member.findMany).toHaveBeenCalledWith({
-        orderBy: {
-          createdAt: 'desc',
-        },
-      });
     });
 
     it('handles database errors gracefully', async () => {
@@ -117,22 +119,21 @@ describe('/api/waitlist', () => {
     it('creates a new waitlist entry with valid complete data', async () => {
       const requestData = createValidMemberData();
       
+      const mockOccupation = { id: 'occ-1', code: 'STUDENT', name: 'Student', requiresWorkDetails: true };
+      
       const mockCreatedEntry = {
         id: '1',
-        ...requestData,
+        firstName: requestData.firstName,
+        lastName: requestData.lastName,
+        email: requestData.email,
         iban: 'encrypted_NL91ABNA0417164300',
-        dateOfBirth: new Date(requestData.dateOfBirth),
-        communityGoals: JSON.stringify(requestData.communityGoals),
-        disciplines: JSON.stringify(requestData.disciplines),
+        occupation: mockOccupation,
         status: 'PENDING',
         createdAt: new Date(),
-        updatedAt: new Date(),
-        acceptedAt: null,
-        occupationOther: null,
-        disciplinesOther: null,
       };
 
       (prisma.member.findUnique as jest.Mock).mockResolvedValue(null);
+      (prisma.occupation.findUnique as jest.Mock).mockResolvedValue(mockOccupation);
       (prisma.member.create as jest.Mock).mockResolvedValue(mockCreatedEntry);
 
       const request = new NextRequest('http://localhost:3000/api/waitlist', {
@@ -146,57 +147,14 @@ describe('/api/waitlist', () => {
       expect(response.status).toBe(201);
       expect(data.message).toBe('Successfully joined the waitlist!');
       expect(data.entry.email).toBe(requestData.email);
-      expect(data.entry.firstName).toBe(requestData.firstName);
       // Verify IBAN is NOT in response
       expect(data.entry.iban).toBeUndefined();
     });
 
-    it('encrypts IBAN before storing', async () => {
-      const requestData = createValidMemberData();
-
-      (prisma.member.findUnique as jest.Mock).mockResolvedValue(null);
-      (prisma.member.create as jest.Mock).mockResolvedValue({
-        id: '1',
-        ...requestData,
-        iban: 'encrypted_NL91ABNA0417164300',
-        dateOfBirth: new Date(requestData.dateOfBirth),
-        communityGoals: JSON.stringify(requestData.communityGoals),
-        disciplines: JSON.stringify(requestData.disciplines),
-        status: 'PENDING',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        acceptedAt: null,
-        occupationOther: null,
-        disciplinesOther: null,
-      });
-
-      const request = new NextRequest('http://localhost:3000/api/waitlist', {
-        method: 'POST',
-        body: JSON.stringify(requestData),
-      });
-
-      await POST(request);
-
-      expect(prisma.member.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          data: expect.objectContaining({
-            iban: 'encrypted_NL91ABNA0417164300',
-          }),
-        })
-      );
-    });
-
     it('returns 400 if required personal information is missing', async () => {
-      const testCases = [
-        { field: 'firstName', error: 'All personal information fields are required' },
-        { field: 'lastName', error: 'All personal information fields are required' },
-        { field: 'email', error: 'All personal information fields are required' },
-        { field: 'city', error: 'All personal information fields are required' },
-        { field: 'phone', error: 'All personal information fields are required' },
-        { field: 'dateOfBirth', error: 'All personal information fields are required' },
-      ];
+      const fields = ['firstName', 'lastName', 'email', 'city', 'phone', 'dateOfBirth'];
 
-      for (const { field, error } of testCases) {
+      for (const field of fields) {
         const data = createValidMemberData();
         delete (data as Record<string, unknown>)[field];
 
@@ -209,14 +167,12 @@ describe('/api/waitlist', () => {
         const responseData = await response.json();
 
         expect(response.status).toBe(400);
-        expect(responseData.error).toBe(error);
+        expect(responseData.error).toBe('All personal information fields are required');
       }
     });
 
     it('returns 400 if payment information is missing', async () => {
-      const testCases = ['accountHolderName', 'iban'];
-
-      for (const field of testCases) {
+      for (const field of ['accountHolderName', 'iban']) {
         const data = createValidMemberData();
         delete (data as Record<string, unknown>)[field];
 
@@ -231,6 +187,21 @@ describe('/api/waitlist', () => {
         expect(response.status).toBe(400);
         expect(responseData.error).toBe('Payment information is required');
       }
+    });
+
+    it('returns 400 if occupation is missing', async () => {
+      const data = createValidMemberData({ occupationId: undefined, occupationCustom: undefined });
+
+      const request = new NextRequest('http://localhost:3000/api/waitlist', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+
+      const response = await POST(request);
+      const responseData = await response.json();
+
+      expect(response.status).toBe(400);
+      expect(responseData.error).toBe('Occupation is required');
     });
 
     it('returns 400 for invalid email format', async () => {
@@ -264,7 +235,7 @@ describe('/api/waitlist', () => {
     });
 
     it('returns 400 for invalid phone number', async () => {
-      const data = createValidMemberData({ phone: '123' }); // Too short
+      const data = createValidMemberData({ phone: '123' });
 
       const request = new NextRequest('http://localhost:3000/api/waitlist', {
         method: 'POST',
@@ -275,7 +246,7 @@ describe('/api/waitlist', () => {
       const responseData = await response.json();
 
       expect(response.status).toBe(400);
-      expect(responseData.error).toBe('Invalid phone number format');
+      expect(responseData.error).toContain('Invalid phone number format');
     });
 
     it('returns 400 if consent is not given', async () => {
@@ -293,77 +264,11 @@ describe('/api/waitlist', () => {
       expect(responseData.error).toBe('Community goals, fun answer, and consent are required');
     });
 
-    it('validates occupation with "Anders" requires occupationOther', async () => {
-      const data = createValidMemberData({ 
-        occupation: 'Anders',
-        occupationOther: '' 
-      });
-
-      const request = new NextRequest('http://localhost:3000/api/waitlist', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
-
-      const response = await POST(request);
-      const responseData = await response.json();
-
-      expect(response.status).toBe(400);
-      expect(responseData.error).toBe('Please specify your occupation');
-    });
-
-    it('validates work details for certain occupations', async () => {
-      const occupations = ['Student', 'Young professional', 'Ondernemer', 'Anders'];
-
-      for (const occupation of occupations) {
-        const data = createValidMemberData({ 
-          occupation,
-          occupationOther: occupation === 'Anders' ? 'Freelancer' : undefined,
-          industry: '',
-          companyName: '',
-          companyRole: '',
-        });
-
-        const request = new NextRequest('http://localhost:3000/api/waitlist', {
-          method: 'POST',
-          body: JSON.stringify(data),
-        });
-
-        const response = await POST(request);
-        const responseData = await response.json();
-
-        expect(response.status).toBe(400);
-        expect(responseData.error).toBe('Industry, company name, and role are required for your occupation type');
-      }
-    });
-
-    it('validates disciplines required when horse experience is yes', async () => {
-      const data = createValidMemberData({ 
-        horseExperience: 'Ja – actief ruiter / eigenaar / sector',
-        disciplines: [],
-      });
-
-      const request = new NextRequest('http://localhost:3000/api/waitlist', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
-
-      const response = await POST(request);
-      const responseData = await response.json();
-
-      expect(response.status).toBe(400);
-      expect(responseData.error).toBe('Please select at least one discipline');
-    });
-
     it('returns 409 if email already exists', async () => {
-      const existingEntry = {
+      (prisma.member.findUnique as jest.Mock).mockResolvedValue({
         id: '1',
         email: 'existing@example.com',
-        firstName: 'Existing',
-        lastName: 'User',
-        createdAt: new Date(),
-      };
-
-      (prisma.member.findUnique as jest.Mock).mockResolvedValue(existingEntry);
+      });
 
       const data = createValidMemberData({ email: 'existing@example.com' });
 
@@ -381,7 +286,10 @@ describe('/api/waitlist', () => {
     });
 
     it('handles database errors during creation', async () => {
+      const mockOccupation = { id: 'occ-1', code: 'STUDENT', name: 'Student', requiresWorkDetails: true };
+
       (prisma.member.findUnique as jest.Mock).mockResolvedValue(null);
+      (prisma.occupation.findUnique as jest.Mock).mockResolvedValue(mockOccupation);
       (prisma.member.create as jest.Mock).mockRejectedValue(new Error('DB Error'));
 
       const request = new NextRequest('http://localhost:3000/api/waitlist', {

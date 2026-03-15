@@ -1,17 +1,21 @@
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Navigation } from '../navigation';
 
 // Mock next/link
 jest.mock('next/link', () => {
-  return ({ children, href }: { children: React.ReactNode, href: string }) => {
+  const MockLink = ({ children, href }: { children: React.ReactNode, href: string }) => {
     return <a href={href}>{children}</a>;
   };
+  MockLink.displayName = 'MockLink';
+  return MockLink;
 });
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
   usePathname: () => '/nl',
 }));
+
+const defaultTranslations = { ourStory: 'Ons Verhaal' };
 
 describe('Navigation - Floating Glassmorphism', () => {
   beforeEach(() => {
@@ -28,15 +32,14 @@ describe('Navigation - Floating Glassmorphism', () => {
     jest.clearAllMocks();
   });
 
-  it('renders the logo and brand name', () => {
-    render(<Navigation locale="nl" />);
+  it('renders the logo', () => {
+    render(<Navigation locale="nl" translations={defaultTranslations} />);
     
-    expect(screen.getByText('Cross & Connect')).toBeInTheDocument();
-    expect(screen.getByText('&')).toBeInTheDocument();
+    expect(screen.getByAltText('Cross & Connect')).toBeInTheDocument();
   });
 
   it('links to the home page with correct locale', () => {
-    render(<Navigation locale="en" />);
+    render(<Navigation locale="en" translations={defaultTranslations} />);
     
     const links = screen.getAllByRole('link');
     const logoLink = links[0];
@@ -44,7 +47,7 @@ describe('Navigation - Floating Glassmorphism', () => {
   });
 
   it('renders with fixed positioning and centered layout', () => {
-    const { container } = render(<Navigation locale="nl" />);
+    const { container } = render(<Navigation locale="nl" translations={defaultTranslations} />);
     
     const nav = container.querySelector('nav');
     expect(nav).toBeInTheDocument();
@@ -52,7 +55,7 @@ describe('Navigation - Floating Glassmorphism', () => {
   });
 
   it('has glassmorphism styling with pill shape', () => {
-    const { container } = render(<Navigation locale="nl" />);
+    const { container } = render(<Navigation locale="nl" translations={defaultTranslations} />);
     
     const nav = container.querySelector('nav');
     expect(nav).toBeInTheDocument();
@@ -66,15 +69,14 @@ describe('Navigation - Floating Glassmorphism', () => {
     expect(nav).toHaveClass('z-[100]');
   });
 
-  it('renders brand icon svg', () => {
-    const { container } = render(<Navigation locale="nl" />);
+  it('renders translated menu item', () => {
+    render(<Navigation locale="nl" translations={defaultTranslations} />);
     
-    const svg = container.querySelector('svg');
-    expect(svg).toBeInTheDocument();
+    expect(screen.getByText('Ons Verhaal')).toBeInTheDocument();
   });
 
   it('renders with top-5 class initially (not scrolled)', () => {
-    const { container } = render(<Navigation locale="nl" />);
+    const { container } = render(<Navigation locale="nl" translations={defaultTranslations} />);
     
     const nav = container.querySelector('nav');
     expect(nav).toHaveClass('top-5');
@@ -83,7 +85,7 @@ describe('Navigation - Floating Glassmorphism', () => {
   it('has scroll event listener attached', () => {
     const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
     
-    render(<Navigation locale="nl" />);
+    render(<Navigation locale="nl" translations={defaultTranslations} />);
     
     expect(addEventListenerSpy).toHaveBeenCalledWith(
       'scroll',
@@ -94,15 +96,10 @@ describe('Navigation - Floating Glassmorphism', () => {
     addEventListenerSpy.mockRestore();
   });
 
-  it('hides divider and nav when no menu items', () => {
-    const { container } = render(<Navigation locale="nl" />);
+  it('renders site-nav with menu items', () => {
+    const { container } = render(<Navigation locale="nl" translations={defaultTranslations} />);
     
-    // Divider should not be visible when menuItems is empty
-    const divider = container.querySelector('.h-6.w-px');
-    expect(divider).not.toBeInTheDocument();
-    
-    // Site-nav should not be visible
     const siteNav = container.querySelector('.site-nav');
-    expect(siteNav).not.toBeInTheDocument();
+    expect(siteNav).toBeInTheDocument();
   });
 });

@@ -13,7 +13,9 @@ export default async function Home({
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation Bar */}
-      <Navigation locale={locale} />
+      <Navigation locale={locale} translations={{
+        ourStory: t('nav.ourStory'),
+      }} />
       
       {/* Main Content - Split Screen (floats beneath nav) */}
       <div className="flex-1 flex flex-col md:flex-row">
