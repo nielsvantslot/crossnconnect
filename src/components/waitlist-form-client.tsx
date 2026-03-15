@@ -55,27 +55,35 @@ interface FieldErrors {
 
 interface Occupation {
   id: string;
+  code: string;
   name: string;
   nameEn: string;
   requiresWorkDetails: boolean;
+  isSystem: boolean;
 }
 
 interface Industry {
   id: string;
+  code: string;
   name: string;
   nameEn: string;
+  isSystem: boolean;
 }
 
 interface Discipline {
   id: string;
+  code: string;
   name: string;
   nameEn: string;
+  isSystem: boolean;
 }
 
 interface CommunityGoal {
   id: string;
+  code: string;
   name: string;
   nameEn: string;
+  isSystem: boolean;
 }
 
 const TOTAL_STEPS = 5;
