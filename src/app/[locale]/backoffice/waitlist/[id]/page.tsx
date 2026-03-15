@@ -85,9 +85,9 @@ export default async function WaitlistDetailPage({
     ? `/${locale}/backoffice/waitlist/${prevPendingMember.id}`
     : `/${locale}/backoffice/waitlist`;
 
-  const getLocalizedName = (item: { name: string; nameEn: string } | null) => {
+  const getLocalizedName = (item: { name: string; nameEn: string | null } | null) => {
     if (!item) return '-';
-    return locale === 'en' ? item.nameEn : item.name;
+    return locale === 'en' ? (item.nameEn || item.name) : item.name;
   };
 
   return (

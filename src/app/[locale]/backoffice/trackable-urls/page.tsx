@@ -21,7 +21,7 @@ export default async function TrackableUrlsPage({
       clicks: {
         select: {
           id: true,
-          ipAddress: true,
+          ipAddressHash: true,
           clickedAt: true,
         },
       },
@@ -35,7 +35,7 @@ export default async function TrackableUrlsPage({
     name: url.name,
     createdAt: url.createdAt,
     totalClicks: url.clicks.length,
-    uniqueClicks: new Set(url.clicks.map((c) => c.ipAddress).filter(Boolean)).size,
+    uniqueClicks: new Set(url.clicks.map((c) => c.ipAddressHash).filter(Boolean)).size,
     lastClickedAt: url.clicks.length > 0 
       ? url.clicks.sort((a, b) => b.clickedAt.getTime() - a.clickedAt.getTime())[0].clickedAt
       : null,

@@ -40,10 +40,11 @@ export async function GET() {
     });
     
     // Don't return encrypted IBANs to client
-    const sanitizedEntries = entries.map(({ iban: _iban, ...entry }) => ({
-      ...entry,
-      // IBAN is excluded from response for security
-    }));
+    const sanitizedEntries = entries.map((entry) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { iban: _excludedIban, ...safeData } = entry;
+      return safeData;
+    });
     
     return NextResponse.json(sanitizedEntries);
   } catch (error) {
@@ -365,7 +366,11 @@ export async function POST(request: NextRequest) {
     });
 
     // Return success but without sensitive data
-    const { iban: _iban2, ...safeEntry } = entry;
+    const safeEntry = (() => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { iban: _excludedIban2, ...safe } = entry;
+      return safe;
+    })();
 
     return NextResponse.json(
       { 
