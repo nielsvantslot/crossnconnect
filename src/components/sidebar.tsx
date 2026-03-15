@@ -66,9 +66,9 @@ export function Sidebar({ user, translations: t }: SidebarProps) {
   ];
 
   return (
-    <div className="flex h-dvh w-64 flex-col border-r bg-background shadow-lg md:shadow-none">
-      <div className="flex h-16 items-center border-b pl-16 pr-4 md:px-6">
-        <h2 className="text-lg md:text-xl font-bold">Cross & Connect</h2>
+    <div className="flex h-dvh w-64 flex-col border-r border-brand-green/20 bg-background shadow-lg md:shadow-none">
+      <div className="flex h-16 items-center border-b border-brand-green/20 pl-16 pr-4 md:px-6 bg-gradient-to-r from-brand-dark-green/5 to-brand-green/5">
+        <h2 className="text-lg md:text-xl font-bold text-brand-dark-green">Cross & Connect</h2>
       </div>
 
       <nav className="flex-1 space-y-4 p-3 md:p-4 overflow-y-auto">

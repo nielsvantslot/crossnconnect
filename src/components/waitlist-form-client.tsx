@@ -417,13 +417,13 @@ export function WaitlistForm({ translations: t, locale }: WaitlistFormProps) {
             key={step}
             className={`flex-1 h-2 mx-1 rounded-full transition-colors ${
               step <= currentStep
-                ? 'bg-blue-600 dark:bg-blue-500'
-                : 'bg-gray-200 dark:bg-gray-700'
+                ? 'bg-brand-green dark:bg-brand-green'
+                : 'bg-brand-green/20 dark:bg-brand-green/20'
             }`}
           />
         ))}
       </div>
-      <p className="text-sm text-center text-gray-600 dark:text-gray-400">
+      <p className="text-sm text-center text-muted-foreground">
         {t[`step${currentStep}Title`] || `Stap ${currentStep} van ${TOTAL_STEPS}`}
       </p>
     </div>
@@ -433,14 +433,14 @@ export function WaitlistForm({ translations: t, locale }: WaitlistFormProps) {
     const hasError = touchedFields[field] && fieldErrors[field];
     return cn(
       baseClass,
-      hasError && "border-red-500 focus-visible:ring-red-500"
+      hasError && "border-brand-red focus-visible:ring-brand-red"
     );
   };
 
   const renderFieldError = (field: string) => {
     if (!touchedFields[field] || !fieldErrors[field]) return null;
     return (
-      <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+      <p className="text-sm text-brand-red dark:text-brand-red mt-1">
         {fieldErrors[field]}
       </p>
     );
@@ -879,7 +879,7 @@ export function WaitlistForm({ translations: t, locale }: WaitlistFormProps) {
             </div>
             
             {/* Consent Checkbox */}
-            <div className="flex items-start space-x-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-md">
+            <div className="flex items-start space-x-2 p-4 bg-brand-dark-green/5 dark:bg-brand-dark-green/10 rounded-md border border-brand-green/20">
               <Checkbox
                 id="consent"
                 checked={formData.consentGiven}
@@ -898,8 +898,8 @@ export function WaitlistForm({ translations: t, locale }: WaitlistFormProps) {
           <div
             className={`p-4 rounded-md text-sm ${
               message.type === 'success'
-                ? 'bg-green-50 text-green-700 border border-green-200 dark:bg-green-950/50 dark:text-green-400 dark:border-green-900'
-                : 'bg-red-50 text-red-700 border border-red-200 dark:bg-red-950/50 dark:text-red-400 dark:border-red-900'
+                ? 'bg-brand-green/10 text-brand-dark-green border border-brand-green dark:bg-brand-green/20 dark:text-brand-green dark:border-brand-green'
+                : 'bg-brand-red/10 text-brand-red border border-brand-red dark:bg-brand-red/20 dark:text-brand-red dark:border-brand-red'
             }`}
           >
             {message.text}

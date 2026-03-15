@@ -120,9 +120,9 @@ export default async function WaitlistDetailPage({
 
       {/* Status Alert for ACCEPTED/DENIED */}
       {member.status === 'ACCEPTED' && (
-        <Alert variant="success" className="mb-6">
-          <Check className="h-4 w-4" />
-          <AlertDescription>
+        <Alert variant="success" className="mb-6 border-brand-green bg-brand-green/10">
+          <Check className="h-4 w-4 text-brand-green" />
+          <AlertDescription className="text-brand-dark-green">
             {t('backoffice.waitlist.detail.alreadyAccepted')}
             {member.acceptedBy && ` - ${member.acceptedBy.name}`}
           </AlertDescription>
@@ -130,9 +130,9 @@ export default async function WaitlistDetailPage({
       )}
 
       {member.status === 'DENIED' && (
-        <Alert variant="destructive" className="mb-6">
-          <X className="h-4 w-4" />
-          <AlertDescription>
+        <Alert variant="destructive" className="mb-6 border-brand-red bg-brand-red/10">
+          <X className="h-4 w-4 text-brand-red" />
+          <AlertDescription className="text-brand-red">
             {t('backoffice.waitlist.detail.alreadyDenied')}
           </AlertDescription>
         </Alert>
@@ -141,8 +141,8 @@ export default async function WaitlistDetailPage({
       <div className="grid gap-4 sm:gap-6">
         {/* Personal Information */}
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg sm:text-xl">{t('backoffice.waitlist.detail.personalInfo')}</CardTitle>
+          <CardHeader className="pb-3 bg-gradient-to-r from-brand-dark-green/5 to-transparent">
+            <CardTitle className="text-lg sm:text-xl text-brand-dark-green">{t('backoffice.waitlist.detail.personalInfo')}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-3 sm:gap-4 sm:grid-cols-2">
             <div>
@@ -184,8 +184,8 @@ export default async function WaitlistDetailPage({
 
         {/* Payment Information */}
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg sm:text-xl">{t('backoffice.waitlist.detail.paymentInfo')}</CardTitle>
+          <CardHeader className="pb-3 bg-gradient-to-r from-brand-dark-green/5 to-transparent">
+            <CardTitle className="text-lg sm:text-xl text-brand-dark-green">{t('backoffice.waitlist.detail.paymentInfo')}</CardTitle>
             <CardDescription>{t('backoffice.waitlist.detail.paymentInfoDesc')}</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3 sm:gap-4">
@@ -204,8 +204,8 @@ export default async function WaitlistDetailPage({
 
         {/* Profile & Work */}
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg sm:text-xl">{t('backoffice.waitlist.detail.profileWork')}</CardTitle>
+          <CardHeader className="pb-3 bg-gradient-to-r from-brand-dark-green/5 to-transparent">
+            <CardTitle className="text-lg sm:text-xl text-brand-dark-green">{t('backoffice.waitlist.detail.profileWork')}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-3 sm:gap-4">
             <div>
@@ -237,8 +237,8 @@ export default async function WaitlistDetailPage({
 
         {/* Horse Sport */}
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg sm:text-xl">{t('backoffice.waitlist.detail.horseSport')}</CardTitle>
+          <CardHeader className="pb-3 bg-gradient-to-r from-brand-dark-green/5 to-transparent">
+            <CardTitle className="text-lg sm:text-xl text-brand-dark-green">{t('backoffice.waitlist.detail.horseSport')}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-3 sm:gap-4">
             <div>
@@ -267,7 +267,7 @@ export default async function WaitlistDetailPage({
                     <dt className="text-sm font-medium text-muted-foreground">{t('backoffice.waitlist.detail.disciplines')}</dt>
                     <dd className="mt-1 flex flex-wrap gap-2">
                       {member.disciplines.map(({ discipline }) => (
-                        <Badge key={discipline.id} variant="outline">
+                        <Badge key={discipline.id} variant="outline" className="border-brand-green/40 text-brand-dark-green">
                           {getLocalizedName(discipline)}
                         </Badge>
                       ))}
@@ -294,8 +294,8 @@ export default async function WaitlistDetailPage({
 
         {/* Community & Fun */}
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg sm:text-xl">{t('backoffice.waitlist.detail.communityPrivacy')}</CardTitle>
+          <CardHeader className="pb-3 bg-gradient-to-r from-brand-dark-green/5 to-transparent">
+            <CardTitle className="text-lg sm:text-xl text-brand-dark-green">{t('backoffice.waitlist.detail.communityPrivacy')}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-3 sm:gap-4">
             {member.communityGoals.length > 0 && (
@@ -303,7 +303,7 @@ export default async function WaitlistDetailPage({
                 <dt className="text-sm font-medium text-muted-foreground">{t('backoffice.waitlist.detail.communityGoals')}</dt>
                 <dd className="mt-1 flex flex-wrap gap-2">
                   {member.communityGoals.map(({ communityGoal }) => (
-                    <Badge key={communityGoal.id} variant="outline">
+                    <Badge key={communityGoal.id} variant="outline" className="border-brand-green/40 text-brand-dark-green">
                       {getLocalizedName(communityGoal)}
                     </Badge>
                   ))}

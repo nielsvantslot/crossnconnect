@@ -10,6 +10,14 @@ export default {
   theme: {
   	extend: {
   		colors: {
+  			// Cross & Connect Brand Colors
+  			brand: {
+  				'dark-green': 'hsl(var(--brand-dark-green))',  // #005332 - PMS 3435
+  				'green': 'hsl(var(--brand-green))',            // #8bb31d - PMS 361
+  				'light-green': 'hsl(var(--brand-light-green))', // #d8d400 - PMS 390
+  				'red': 'hsl(var(--brand-red))',                // #C8102E - PMS 186
+  			},
+  			// Default shadcn/ui colors
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -50,6 +58,11 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
+  		},
+  		fontFamily: {
+  			// Cross & Connect Brand Font: Inter (Google Fonts alternative to The Mix)
+  			sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+  			mix: ['var(--font-inter)', 'Inter', 'sans-serif'], // Alias for The Mix
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

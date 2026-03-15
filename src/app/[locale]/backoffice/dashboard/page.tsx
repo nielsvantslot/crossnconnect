@@ -125,7 +125,7 @@ export default async function DashboardPage({
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('backoffice.dashboard.activeMembers')}</CardTitle>
-              <CheckCircle className="h-4 w-4 text-green-600" />
+              <CheckCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{dashboardStats.accepted}</div>
@@ -136,7 +136,7 @@ export default async function DashboardPage({
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('backoffice.dashboard.pendingReview')}</CardTitle>
-              <Clock className="h-4 w-4 text-yellow-600" />
+              <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{dashboardStats.pending}</div>
@@ -147,7 +147,7 @@ export default async function DashboardPage({
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('backoffice.dashboard.denied')}</CardTitle>
-              <XCircle className="h-4 w-4 text-red-600" />
+              <XCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{dashboardStats.denied}</div>
@@ -167,13 +167,13 @@ export default async function DashboardPage({
                 <div>
                   <CardTitle>{t('backoffice.dashboard.linkVisits')}</CardTitle>
                   <CardDescription className="mt-1">
-                    <span className={`font-semibold ${growthRate >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    <span className="font-semibold">
                       {growthRate > 0 ? '+' : ''}{growthRate}%
                     </span>
                     {' '}{t('backoffice.dashboard.growthFromLastWeek')}
                   </CardDescription>
                 </div>
-                <TrendingUp className={`h-4 w-4 ${growthRate >= 0 ? 'text-green-600' : 'text-red-600'}`} />
+                <TrendingUp className="h-4 w-4 text-muted-foreground" />
               </div>
             </CardHeader>
             <CardContent>

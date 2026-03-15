@@ -60,8 +60,8 @@ export function LoginForm({ translations: t }: LoginFormProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-brand-dark-green/10 via-brand-green/5 to-brand-light-green/10 dark:from-slate-900 dark:to-slate-800">
+      <Card className="w-full max-w-md border-brand-green/20 shadow-xl">
         <CardHeader>
           <CardTitle className="text-2xl">{t.title}</CardTitle>
           <CardDescription>
